@@ -34,7 +34,8 @@
     "react-native-screens": "~3.18.0",
     "react-native-web": "~0.18.9",
     "expo-barcode-scanner": "~12.1.0",
-    "expo-updates": "~0.15.6"
+    "expo-updates": "~0.15.6",
+    "@expo/webpack-config": "^0.17.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
