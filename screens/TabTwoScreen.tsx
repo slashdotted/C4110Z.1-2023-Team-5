@@ -4,6 +4,9 @@ import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import React, { useState, useEffect } from "react";
 import { Button } from "native-base";
+import { OpenFoodFactsApi } from "openfoodfac-ts";
+
+const openFoodFactsApi = new OpenFoodFactsApi();
 
 export default function TabTwoScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -27,11 +30,12 @@ export default function TabTwoScreen() {
   }) => {
     setScanned(true);
 
-    fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
-      .then((response) => response.json())
-      .then((json) => {
-        Alert.alert("Product Information", JSON.stringify(json));
-      });
+    openFoodFactsApi.findProductByBarcode(data).then((product) => {
+      Alert.alert(
+        "Product found",
+        product?.product_name || "Product not found"
+      );
+    });
   };
 
   if (hasPermission === null) {
