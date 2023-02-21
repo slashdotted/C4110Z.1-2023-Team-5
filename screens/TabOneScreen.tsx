@@ -5,6 +5,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { RootTabScreenProps } from '../types';
 import { SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import { FontAwesome } from "@expo/vector-icons";
 
 type ItemData = {
   id: string;
@@ -87,15 +88,21 @@ const Item = ({item, onPress, textColor}: ItemProps) => {
     borderColor: '#B91C1C'
   }
 
+  let icon = {name: "exclamation-circle"}
+
   if(item.level == 2){
     style.borderColor = '#FF9900';
+    icon.name = 'warning';
   }else if(item.level == 3)
   {
     style.borderColor = '#15803D';
+    icon.name = 'check-square-o'
   } 
 
   return(
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+      <FontAwesome name={icon.name as any} size={25} color='black' style={{ marginRight: 15 }}
+                            />
       <Text style={[styles.title, {color: textColor}]}>{item.title}</Text>
       <Text style={[styles.expDate, {color: textColor}]}>{item.expirationDate}</Text>
     </TouchableOpacity>
