@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
@@ -18,9 +18,20 @@ export default function TabTwoScreen() {
     getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = ({
+    type,
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    fetch(`https://world.openfoodfacts.org/api/v0/product/${data}.json`)
+      .then((response) => response.json())
+      .then((json) => {
+        Alert.alert("Product Information", JSON.stringify(json));
+      });
   };
 
   if (hasPermission === null) {
