@@ -1,9 +1,9 @@
 import { Linking, Pressable, StyleSheet } from "react-native";
-import { View } from "../components/Themed";
+import { View, Text } from "../components/Themed";
 import React, { useEffect } from "react";
 import MapView, { Geojson } from "react-native-maps";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { Link, Text } from "native-base";
+import { Link } from "native-base";
 import openMap from "react-native-open-maps";
 import * as FoodBanks from "../assets/foodbanks.json";
 import * as Location from "expo-location";
