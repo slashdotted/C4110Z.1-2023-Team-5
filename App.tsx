@@ -1,5 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
@@ -14,12 +15,14 @@ export default function App() {
     return null;
   } else {
     return (
-      <NativeBaseProvider>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
-      </NativeBaseProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NativeBaseProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </NativeBaseProvider>
+      </GestureHandlerRootView>
     );
   }
 }
