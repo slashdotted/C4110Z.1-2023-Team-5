@@ -12,6 +12,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Badge, VStack } from "native-base";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 
@@ -88,12 +89,28 @@ function BottomTabNavigator() {
               opacity: pressed ? 0.5 : 1,
             })}
           >
-            <FontAwesome
-              name="bell-o"
-              size={25}
-              color={Colors[colorScheme].text}
-              style={{ marginRight: 15 }}
-            />
+            <VStack>
+              <Badge
+                colorScheme={"info"}
+                rounded={"full"}
+                alignSelf="flex-end"
+                mr={1}
+                mb={-3}
+                variant="solid"
+                zIndex={1}
+                _text={{
+                  fontSize: 11,
+                }}
+              >
+                4
+              </Badge>
+              <FontAwesome
+                name="bell-o"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </VStack>
           </Pressable>
         ),
       }}
