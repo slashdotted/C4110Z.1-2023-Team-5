@@ -8,7 +8,7 @@ import { OpenFoodFactsApi } from "openfoodfac-ts";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
-export default function TabTwoScreen() {
+export default function ScannerScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
