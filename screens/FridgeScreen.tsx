@@ -130,9 +130,9 @@ const Item = ({ item, onPress, textColor }: ItemProps) => {
   );
 };
 
-export default function TabOneScreen({
+export default function FridgeScreen({
   navigation,
-}: RootTabScreenProps<"TabOne">) {
+}: RootTabScreenProps<"Fridge">) {
   const [selectedId, setSelectedId] = useState<string>();
 
   const renderItem = ({ item }: { item: ItemData }) => {

@@ -15,16 +15,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Badge, VStack } from "native-base";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
-
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import FoodBanksScreen from "../screens/FoodBanksScreen";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ScannerScreen from "../screens/ScannerScreen";
+import FridgeScreen from "../screens/FridgeScreen";
 
 export default function Navigation({
   colorScheme,
@@ -116,8 +115,8 @@ function BottomTabNavigator() {
       }}
     >
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
+        name="Fridge"
+        component={FridgeScreen}
         options={{
           title: "Your fridge",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
