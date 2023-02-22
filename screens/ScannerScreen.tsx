@@ -1,5 +1,4 @@
 import { Alert, StyleSheet } from "react-native";
-
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import React, { useState, useEffect } from "react";

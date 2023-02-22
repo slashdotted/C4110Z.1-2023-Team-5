@@ -18,12 +18,12 @@ import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import FoodBanksScreen from "../screens/FoodBanksScreen";
-import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import { RootStackParamList, RootTabParamList } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ScannerScreen from "../screens/ScannerScreen";
 import FridgeScreen from "../screens/FridgeScreen";
+import NotificationScreen from "../screens/NotificationsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -55,13 +55,15 @@ function RootNavigator() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Notifications"
+        component={NotificationScreen}
+        options={{ title: "Notifications" }}
+      />
+      <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -78,12 +80,12 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Fridge"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerRight: () => (
           <Pressable
-            onPress={() => navigation.navigate("Modal")}
+            onPress={() => navigation.navigate("Notifications")}
             style={({ pressed }) => ({
               opacity: pressed ? 0.5 : 1,
             })}
