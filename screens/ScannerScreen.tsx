@@ -1,7 +1,16 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Button, Center, FlatList, HStack, Image, VStack } from "native-base";
+import {
+  Box,
+  Button,
+  Center,
+  FlatList,
+  HStack,
+  Image,
+  Spacer,
+  VStack,
+} from "native-base";
 import { OpenFoodFactsApi } from "openfoodfac-ts";
 import { Product } from "openfoodfac-ts/dist/OpenFoodFactsApi/types";
 import React, { useState, useEffect } from "react";
@@ -78,50 +87,63 @@ export default function ScannerScreen() {
       />
 
       {product && (
-        <BottomSheet
-          backdropComponent={(props) => {
-            return (
-              <BottomSheetBackdrop
-                disappearsOnIndex={-1}
-                {...props}
-                pressBehavior={"close"}
+        <>
+          <BottomSheet
+            backdropComponent={(props) => {
+              return (
+                <BottomSheetBackdrop
+                  disappearsOnIndex={-1}
+                  {...props}
+                  pressBehavior={"close"}
+                />
+              );
+            }}
+            enablePanDownToClose={true}
+            snapPoints={["65%", "99%"]}
+            index={0}
+            onClose={() => {
+              setScanned(false);
+              setProduct(null);
+            }}
+            style={{
+              padding: 20,
+            }}
+          >
+            <Center>
+              <Image
+                src={product.image_url}
+                alt={product.product_name}
+                resizeMode={"contain"}
+                size={"xl"}
               />
-            );
-          }}
-          enablePanDownToClose={true}
-          snapPoints={["65%", "99%"]}
-          index={0}
-          onClose={() => {
-            setScanned(false);
-            setProduct(null);
-          }}
-          style={{
-            padding: 20,
-          }}
-        >
-          <Center>
-            <Image
-              src={product.image_url}
-              alt={product.product_name}
-              resizeMode={"contain"}
-              size={"xl"}
-            />
-          </Center>
-          <Text style={styles.title}>{product.product_name}</Text>
+            </Center>
+            <Text style={styles.title}>{product.product_name}</Text>
 
-          <Center mb={2}>
+            <Text style={styles.ingredients}>Ingredients:</Text>
+            <BottomSheetFlatList
+              data={product.ingredients}
+              renderItem={({ item }) => (
+                <Text style={styles.ingredients}>{item.text}</Text>
+              )}
+              keyExtractor={(item) => item.text || ""}
+              ListFooterComponentStyle={{
+                padding: 30,
+              }}
+              ListFooterComponent={<View />}
+            />
+          </BottomSheet>
+          <Center
+            style={{
+              position: "absolute",
+              padding: 10,
+              bottom: 0,
+              backgroundColor: "white",
+              width: "100%",
+            }}
+          >
             <Button>Add to fridge</Button>
           </Center>
-          <Text style={styles.ingredients}>Ingredients:</Text>
-          <BottomSheetFlatList
-            style={{ flex: 1 }}
-            data={product.ingredients}
-            renderItem={({ item }) => (
-              <Text style={styles.ingredients}>{item.text}</Text>
-            )}
-            keyExtractor={(item) => item.text || ""}
-          />
-        </BottomSheet>
+        </>
       )}
     </View>
   );
