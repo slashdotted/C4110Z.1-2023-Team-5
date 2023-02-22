@@ -1,11 +1,12 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 
 import { Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
-import { SafeAreaView, FlatList, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { Pressable } from "native-base";
 
 type ItemData = {
   id: string;
@@ -101,17 +102,21 @@ const Item = ({ item, onPress, textColor }: ItemProps) => {
   return (
     <Swipeable
       renderRightActions={() => (
-        <TouchableOpacity
-          style={{
-            backgroundColor: "red",
-            width: 100,
-            height: 100,
-            justifyContent: "center",
-            alignItems: "center",
+        <Pressable
+          px={3}
+          onPress={() => {
+            // TODO: Delete item
           }}
+          justifyContent={"center"}
+          bg={"red.500"}
+          borderRadius={4}
+          my={1}
+          ml={2}
         >
-          <Text style={{ color: "white" }}>Delete</Text>
-        </TouchableOpacity>
+          <Text lightColor="white" darkColor="white">
+            Delete
+          </Text>
+        </Pressable>
       )}
     >
       <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
@@ -149,20 +154,21 @@ export default function FridgeScreen({
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
   },
   title: {
     fontSize: 20,

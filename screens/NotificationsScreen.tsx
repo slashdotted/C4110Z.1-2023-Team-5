@@ -42,23 +42,27 @@ export default function NotificationScreen() {
   const renderNotification: ListRenderItem<Notification> = ({ item }) => {
     return (
       <Swipeable
-        renderRightActions={() => (
-          <Pressable
-            px={3}
-            onPress={() => {
-              setNotifications((prev) => prev.filter((n) => n.id !== item.id));
-            }}
-            justifyContent={"center"}
-            bg={"red.500"}
-            borderRadius={"lg"}
-            my={1}
-            ml={2}
-          >
-            <Text lightColor="white" darkColor="white">
-              Delete
-            </Text>
-          </Pressable>
-        )}
+        renderRightActions={(progress, dragX) => {
+          return (
+            <Pressable
+              px={3}
+              onPress={() => {
+                setNotifications((prev) =>
+                  prev.filter((n) => n.id !== item.id)
+                );
+              }}
+              justifyContent={"center"}
+              bg={"red.500"}
+              borderRadius={4}
+              my={1}
+              ml={2}
+            >
+              <Text lightColor="white" darkColor="white">
+                Delete
+              </Text>
+            </Pressable>
+          );
+        }}
       >
         <Alert
           my={1}
