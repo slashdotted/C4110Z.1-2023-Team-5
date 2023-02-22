@@ -203,7 +203,7 @@ export default function ScannerScreen() {
               paddingBottom: 20,
               paddingTop: 6,
               bottom: 0,
-              backgroundColor: "white",
+              backgroundColor: "rgb(240,240,240)",
               width: "100%",
             }}
           >
