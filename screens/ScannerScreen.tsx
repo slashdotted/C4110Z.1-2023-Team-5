@@ -33,10 +33,6 @@ export default function ScannerScreen() {
     };
 
     getBarCodeScannerPermissions();
-
-    openFoodFactsApi.findProductByBarcode("737628064502").then((product) => {
-      setProduct(product);
-    });
   }, []);
 
   const handleBarCodeScanned = ({
