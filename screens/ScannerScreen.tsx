@@ -47,6 +47,18 @@ export default function ScannerScreen() {
 
   return (
     <View style={styles.container}>
+      <Button
+        style={{
+          position: "absolute",
+          bottom: 30,
+          zIndex: 1,
+        }}
+        onPress={() => {
+          // TODO: Add manual product
+        }}
+      >
+        Add manually
+      </Button>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
