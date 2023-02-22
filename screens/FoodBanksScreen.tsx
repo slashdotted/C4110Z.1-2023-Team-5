@@ -2,7 +2,7 @@ import { Linking, Pressable, StyleSheet } from "react-native";
 import { View, Text } from "../components/Themed";
 import React, { useEffect } from "react";
 import MapView, { Geojson } from "react-native-maps";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { Link } from "native-base";
 import openMap from "react-native-open-maps";
 import * as FoodBanks from "../assets/foodbanks.json";
@@ -35,9 +35,6 @@ export default function FoodBanksScreen() {
   return (
     <View style={styles.container}>
       <MapView
-        onPress={() => {
-          bottomSheet.current?.close();
-        }}
         ref={ref}
         style={styles.map}
         showsUserLocation={true}
@@ -66,6 +63,15 @@ export default function FoodBanksScreen() {
         snapPoints={["25%"]}
         index={-1}
         onClose={() => setSelectedFoodBank(null)}
+        backdropComponent={(props) => {
+          return (
+            <BottomSheetBackdrop
+              disappearsOnIndex={-1}
+              {...props}
+              pressBehavior={"close"}
+            />
+          );
+        }}
       >
         <View style={styles.bottomSheet}>
           <Text style={styles.title}>

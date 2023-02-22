@@ -1,11 +1,14 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Button, HStack, Image, VStack } from "native-base";
+import { Button, Center, FlatList, HStack, Image, VStack } from "native-base";
 import { OpenFoodFactsApi } from "openfoodfac-ts";
 import { Product } from "openfoodfac-ts/dist/OpenFoodFactsApi/types";
 import React, { useState, useEffect } from "react";
-import BottomSheet from "@gorhom/bottom-sheet";
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetFlatList,
+} from "@gorhom/bottom-sheet";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
@@ -21,6 +24,10 @@ export default function ScannerScreen() {
     };
 
     getBarCodeScannerPermissions();
+
+    openFoodFactsApi.findProductByBarcode("737628064502").then((product) => {
+      setProduct(product);
+    });
   }, []);
 
   const handleBarCodeScanned = ({
@@ -72,27 +79,48 @@ export default function ScannerScreen() {
 
       {product && (
         <BottomSheet
+          backdropComponent={(props) => {
+            return (
+              <BottomSheetBackdrop
+                disappearsOnIndex={-1}
+                {...props}
+                pressBehavior={"close"}
+              />
+            );
+          }}
           enablePanDownToClose={true}
-          snapPoints={["50%", "100%"]}
+          snapPoints={["65%", "99%"]}
           index={0}
           onClose={() => {
             setScanned(false);
+            setProduct(null);
+          }}
+          style={{
+            padding: 20,
           }}
         >
-          <HStack>
+          <Center>
             <Image
               src={product.image_url}
               alt={product.product_name}
               resizeMode={"contain"}
               size={"xl"}
             />
-            <VStack>
-              <Text style={styles.title}>{product.product_name}</Text>
-              {product.ingredients?.map((ingredient) => (
-                <Text style={styles.ingredients}>{ingredient.text}</Text>
-              ))}
-            </VStack>
-          </HStack>
+          </Center>
+          <Text style={styles.title}>{product.product_name}</Text>
+
+          <Center mb={2}>
+            <Button>Add to fridge</Button>
+          </Center>
+          <Text style={styles.ingredients}>Ingredients:</Text>
+          <BottomSheetFlatList
+            style={{ flex: 1 }}
+            data={product.ingredients}
+            renderItem={({ item }) => (
+              <Text style={styles.ingredients}>{item.text}</Text>
+            )}
+            keyExtractor={(item) => item.text || ""}
+          />
         </BottomSheet>
       )}
     </View>
