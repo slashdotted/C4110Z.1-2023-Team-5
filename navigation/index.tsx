@@ -12,7 +12,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Badge, VStack } from "native-base";
+import { Badge, useTheme, VStack } from "native-base";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
@@ -57,7 +57,18 @@ function RootNavigator() {
       <Stack.Screen
         name="Notifications"
         component={NotificationScreen}
-        options={{ title: "Notifications" }}
+        options={{
+          title: "Notifications",
+          headerRight: () => (
+            <Pressable
+              onPress={() => {
+                // TODO: Delete all notifications
+              }}
+            >
+              <FontAwesome name="trash" size={24} />
+            </Pressable>
+          ),
+        }}
       />
       <Stack.Screen
         name="NotFound"
