@@ -107,7 +107,7 @@ function BottomTabNavigator() {
               </Badge>
               <FontAwesome
                 name="bell-o"
-                size={25}
+                size={24}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
               />
