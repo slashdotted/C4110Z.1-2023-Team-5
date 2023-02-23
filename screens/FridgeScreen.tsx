@@ -27,14 +27,16 @@ const Item = ({ item, onPress, textColor, onDelete }: ItemProps) => {
     borderColor: "#B91C1C",
   };
 
-  let icon = { name: "exclamation-circle" };
+  let icon = { name: "exclamation-circle", color: "red" };
 
   if (item.level == 2) {
     style.borderColor = "#FF9900";
     icon.name = "warning";
+    icon.color = "#FF9900";
   } else if (item.level == 3) {
     style.borderColor = "#15803D";
     icon.name = "check-square-o";
+    icon.color = "#15803D";
   }
 
   return (
@@ -61,7 +63,7 @@ const Item = ({ item, onPress, textColor, onDelete }: ItemProps) => {
         <FontAwesome
           name={icon.name as any}
           size={25}
-          color="black"
+          color={icon.color}
           style={{ marginRight: 15 }}
         />
         <Text style={[styles.title, { color: textColor }]}>{item.title}</Text>
