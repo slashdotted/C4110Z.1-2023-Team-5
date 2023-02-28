@@ -33,7 +33,7 @@ To start with the Food Expiration App, follow the steps below:
 
 Clone the repository to your local machine using the following command:
 ```bash
-git clone https://github.com/supsi-dacd-isaac/food-expiration-app.git
+git clone https://github.com/slashdotted/C4110Z.1-2023-Team-5
 ```
 Install the dependencies by running the following command:
 ```bash
