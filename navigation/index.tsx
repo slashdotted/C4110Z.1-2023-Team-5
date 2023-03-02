@@ -1,8 +1,3 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
@@ -12,7 +7,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Badge, useTheme, VStack } from "native-base";
+import { Badge, VStack } from "native-base";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
@@ -24,6 +19,8 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import ScannerScreen from "../screens/ScannerScreen";
 import FridgeScreen from "../screens/FridgeScreen";
 import NotificationScreen from "../screens/NotificationsScreen";
+import TabBarIcon from "../components/TabBarIcon";
+import IconWithBadge from "../components/IconWithBadge";
 
 export default function Navigation({
   colorScheme,
@@ -40,10 +37,6 @@ export default function Navigation({
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -79,10 +72,6 @@ function RootNavigator() {
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
@@ -95,35 +84,11 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
         headerRight: () => (
-          <Pressable
+          <IconWithBadge
             onPress={() => navigation.navigate("Notifications")}
-            style={({ pressed }) => ({
-              opacity: pressed ? 0.5 : 1,
-            })}
-          >
-            <VStack>
-              <Badge
-                colorScheme={"info"}
-                rounded={"full"}
-                alignSelf="flex-end"
-                mr={1}
-                mb={-3}
-                variant="solid"
-                zIndex={1}
-                _text={{
-                  fontSize: 11,
-                }}
-              >
-                4
-              </Badge>
-              <FontAwesome
-                name="bell-o"
-                size={24}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </VStack>
-          </Pressable>
+            icon={"bell-o"}
+            count={3}
+          />
         ),
       }}
     >
@@ -153,14 +118,4 @@ function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
-  color: string;
-}) {
-  return <FontAwesome size={24} style={{ marginBottom: -3 }} {...props} />;
 }

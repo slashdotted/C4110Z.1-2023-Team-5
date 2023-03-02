@@ -1,18 +1,12 @@
 import { View, Text } from "../components/Themed";
 import { ListRenderItem, StyleSheet } from "react-native";
-import { Alert, Badge, Center, FlatList, HStack, Pressable } from "native-base";
+import { Center, FlatList } from "native-base";
 import { useState } from "react";
-import { Swipeable } from "react-native-gesture-handler";
-
-type Notification = {
-  id: number;
-  title: string;
-  status: "error" | "warning" | "info" | "success";
-  date: Date;
-};
+import { Notification as NotificationType } from "../constants/Types";
+import Notification from "../components/Notification";
 
 export default function NotificationScreen() {
-  const [notifications, setNotifications] = useState<Notification[]>([
+  const [notifications, setNotifications] = useState<NotificationType[]>([
     {
       id: 1,
       title: "Nutella is expired!",
@@ -39,57 +33,21 @@ export default function NotificationScreen() {
     },
   ]);
 
-  const renderNotification: ListRenderItem<Notification> = ({ item }) => {
+  const renderNotification: ListRenderItem<NotificationType> = ({ item }) => {
     return (
-      <Swipeable
-        renderRightActions={(progress, dragX) => {
-          return (
-            <Pressable
-              px={3}
-              onPress={() => {
-                setNotifications((prev) =>
-                  prev.filter((n) => n.id !== item.id)
-                );
-              }}
-              justifyContent={"center"}
-              bg={"red.500"}
-              borderRadius={4}
-              my={1}
-              ml={2}
-            >
-              <Text lightColor="white" darkColor="white">
-                Delete
-              </Text>
-            </Pressable>
-          );
+      <Notification
+        notification={item}
+        onDelete={() => {
+          setNotifications(notifications.filter((n) => n.id !== item.id));
         }}
-      >
-        <Alert
-          my={1}
-          status={item.status}
-          flexDirection={"row"}
-          alignItems={"center"}
-        >
-          <Alert.Icon mr={3} />
-          <HStack
-            alignItems={"center"}
-            justifyContent={"space-between"}
-            flex={1}
-          >
-            <Text>{item.title}</Text>
-            <Badge colorScheme={item.status}>
-              {item.date.toLocaleDateString()}
-            </Badge>
-          </HStack>
-        </Alert>
-      </Swipeable>
+      />
     );
   };
 
   return (
     <View style={styles.container}>
       <FlatList
-        style={{ width: "100%" }}
+        style={styles.list}
         data={notifications}
         renderItem={renderNotification}
         keyExtractor={(item) => item.id.toString()}
@@ -108,5 +66,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 10,
+  },
+  list: {
+    width: "100%",
   },
 });
