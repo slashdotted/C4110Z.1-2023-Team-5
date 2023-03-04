@@ -35,7 +35,7 @@ export default function FridgeItem({
   }
 
   return (
-    <Swipeable containerStyle={{marginVertical: 5}}
+    <Swipeable containerStyle={{marginVertical: 5, marginHorizontal: 8}}
       renderRightActions={() => (
         <SwipableDeleteButton
           onDelete={() => {
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
   item: {
     borderWidth: 1,
     padding: 30,
-    marginHorizontal: 2,
     flex: 1,
     borderRadius: 15,
     flexDirection: "row",
