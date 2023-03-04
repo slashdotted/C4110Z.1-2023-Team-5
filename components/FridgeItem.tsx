@@ -18,21 +18,24 @@ export default function FridgeItem({
 }: FridgeItemProps) {
   let style = {
     borderColor: "#B91C1C",
+    backgroundColor: "rgba(185, 28, 28, 0.2)",
   };
-  let icon = { name: "exclamation-circle", color: "red" };
+  let icon = { name: "exclamation", color: "red" };
 
   if (item.level == 2) {
     style.borderColor = "#FF9900";
+    style.backgroundColor = "rgba(255, 153, 0, 0.2)";
     icon.name = "warning";
     icon.color = "#FF9900";
   } else if (item.level == 3) {
     style.borderColor = "#15803D";
+    style.backgroundColor = "rgba(21, 128, 61, 0.2)";
     icon.name = "check-square-o";
     icon.color = "#15803D";
   }
 
   return (
-    <Swipeable
+    <Swipeable containerStyle={{marginVertical: 5}}
       renderRightActions={() => (
         <SwipableDeleteButton
           onDelete={() => {
@@ -48,7 +51,7 @@ export default function FridgeItem({
           color={icon.color}
           style={{ marginRight: 15 }}
         />
-        <Text style={styles.title}>{item.title}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.title}>{item.title}</Text>
         <Text style={styles.expDate}>
           {item.expirationDate.toLocaleDateString()}
         </Text>
@@ -61,17 +64,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "100%",
+    width: "70%",
   },
   item: {
     borderWidth: 1,
-    padding: 20,
-    marginVertical: 2,
-    marginHorizontal: 4,
+    padding: 30,
+    marginHorizontal: 2,
     flex: 1,
     borderRadius: 15,
     flexDirection: "row",

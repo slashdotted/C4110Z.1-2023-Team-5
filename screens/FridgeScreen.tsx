@@ -12,7 +12,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
     [
       {
         id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "First Item",
+        title: "First Item asd asd jbsd hfb sj hf hdjfhsf uuy udfbs jyhyjfhdf kyxhyf kbfjsdhbf hs hsb js",
         expirationDate: new Date(2023, 3, 2),
         level: 1,
       },
