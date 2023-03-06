@@ -6,10 +6,13 @@ import { OpenFoodFactsApi } from "openfoodfac-ts";
 import { Product } from "openfoodfac-ts/dist/OpenFoodFactsApi/types";
 import React, { useState, useEffect } from "react";
 import ItemSheet from "../components/ItemSheet";
+import { ScannerStackScreenProps } from "../types";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
-export default function ScannerScreen() {
+export default function ScannerScreen({
+  navigation,
+}: ScannerStackScreenProps<"Scanner">) {
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
@@ -63,9 +66,7 @@ export default function ScannerScreen() {
       {!product && (
         <Button
           style={styles.addButton}
-          onPress={() => {
-            console.log("TODO: add product manually");
-          }}
+          onPress={() => navigation.navigate("AddProduct")}
         >
           Add manually
         </Button>

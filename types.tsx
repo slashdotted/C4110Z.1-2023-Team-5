@@ -18,17 +18,27 @@ declare global {
 
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  ScannerNavigator: NavigatorScreenParams<ScannerStackParamList> | undefined;
   Notifications: undefined;
   NotFound: undefined;
 };
+
+export type ScannerStackParamList = {
+  Scanner: undefined;
+  AddProduct: undefined;
+};
+
+export type ScannerStackScreenProps<
+  Screen extends keyof ScannerStackParamList
+> = NativeStackScreenProps<ScannerStackParamList, Screen>;
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
   Fridge: undefined;
-  Scanner: undefined;
   FoodBanks: undefined;
+  ScannerNavigator: NavigatorScreenParams<ScannerStackParamList> | undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

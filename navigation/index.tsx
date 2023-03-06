@@ -7,20 +7,24 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Badge, VStack } from "native-base";
 import * as React from "react";
 import { ColorSchemeName, Pressable } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import FoodBanksScreen from "../screens/FoodBanksScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList, RootTabParamList } from "../types";
+import {
+  RootStackParamList,
+  RootTabParamList,
+  ScannerStackParamList,
+} from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ScannerScreen from "../screens/ScannerScreen";
 import FridgeScreen from "../screens/FridgeScreen";
 import NotificationScreen from "../screens/NotificationsScreen";
 import TabBarIcon from "../components/TabBarIcon";
 import IconWithBadge from "../components/IconWithBadge";
+import AddProductScreen from "../screens/AddProductScreen";
 
 export default function Navigation({
   colorScheme,
@@ -72,6 +76,28 @@ function RootNavigator() {
   );
 }
 
+const ScannerStack = createNativeStackNavigator<ScannerStackParamList>();
+function ScannerNavigator() {
+  return (
+    <ScannerStack.Navigator>
+      <ScannerStack.Screen
+        name="Scanner"
+        component={ScannerScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <ScannerStack.Screen
+        name="AddProduct"
+        component={AddProductScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </ScannerStack.Navigator>
+  );
+}
+
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
@@ -101,8 +127,8 @@ function BottomTabNavigator() {
         }}
       />
       <BottomTab.Screen
-        name="Scanner"
-        component={ScannerScreen}
+        name="ScannerNavigator"
+        component={ScannerNavigator}
         options={{
           title: "Add grocery",
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,

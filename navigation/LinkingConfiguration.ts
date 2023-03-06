@@ -7,16 +7,25 @@ const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [Linking.createURL("/")],
   config: {
     screens: {
-      Root: {
+      ScannerNavigator: {
         screens: {
-          Fridge: {
+          AddProduct: {
             screens: {
-              FridgeScreen: "fridge",
+              AddProductScreen: "addproduct",
             },
           },
           Scanner: {
             screens: {
               ScannerScreen: "scanner",
+            },
+          },
+        },
+      },
+      Root: {
+        screens: {
+          Fridge: {
+            screens: {
+              FridgeScreen: "fridge",
             },
           },
           FoodBanks: {
