@@ -1,4 +1,4 @@
-# Food Expiration App
+# FoodX
 The Food Expiration App is a collaborative mobile application developed by SUPSI and Penn State University. This app assists users in managing their refrigerator's contents, reducing food waste by tracking expiration dates, and locating nearby food banks.
 
 ## Features
