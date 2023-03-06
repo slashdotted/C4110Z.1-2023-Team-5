@@ -25,6 +25,9 @@ import NotificationScreen from "../screens/NotificationsScreen";
 import TabBarIcon from "../components/TabBarIcon";
 import IconWithBadge from "../components/IconWithBadge";
 import AddProductScreen from "../screens/AddProductScreen";
+import { RootState } from "../storage/store";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteAllNotifications } from "../storage/reducers/notificatonsReducer";
 
 export default function Navigation({
   colorScheme,
@@ -44,6 +47,8 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const dispatch = useDispatch();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -57,11 +62,7 @@ function RootNavigator() {
         options={{
           title: "Notifications",
           headerRight: () => (
-            <Pressable
-              onPress={() => {
-                // TODO: Delete all notifications
-              }}
-            >
+            <Pressable onPress={() => dispatch(deleteAllNotifications())}>
               <FontAwesome name="trash" size={24} />
             </Pressable>
           ),
@@ -104,6 +105,10 @@ function BottomTabNavigator() {
   const colorScheme = useColorScheme();
   const navigation = useNavigation();
 
+  const notifications = useSelector(
+    (state: RootState) => state.notifications.notifications.length
+  );
+
   return (
     <BottomTab.Navigator
       initialRouteName="Fridge"
@@ -113,7 +118,7 @@ function BottomTabNavigator() {
           <IconWithBadge
             onPress={() => navigation.navigate("Notifications")}
             icon={"bell-o"}
-            count={3}
+            count={notifications}
           />
         ),
       }}
