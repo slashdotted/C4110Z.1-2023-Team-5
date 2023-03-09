@@ -25,6 +25,11 @@ export default function ScannerScreen({
     };
 
     getBarCodeScannerPermissions();
+
+    handleBarCodeScanned({
+      type: "test",
+      data: "3017620425035",
+    });
   }, []);
 
   const handleBarCodeScanned = ({
@@ -84,6 +89,10 @@ export default function ScannerScreen({
             setProduct(null);
             setStatus("Looking for a barcode...");
           }}
+          onAddItem={(product) => {
+            console.log("TODO: Add item", product);
+          }}
+          onAddItemManually={() => navigation.navigate("AddProduct")}
         />
       )}
     </View>

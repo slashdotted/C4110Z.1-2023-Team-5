@@ -11,9 +11,16 @@ import { Product } from "../constants/Types";
 interface ItemSheetProps {
   onClose: () => void;
   product: Product;
+  onAddItem?: (product: Product) => void;
+  onAddItemManually?: () => void;
 }
 
-export default function ItemSheet({ onClose, product }: ItemSheetProps) {
+export default function ItemSheet({
+  onClose,
+  product,
+  onAddItem,
+  onAddItemManually,
+}: ItemSheetProps) {
   return (
     <>
       <BottomSheet
@@ -107,18 +114,31 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
           />
         </Box>
       </BottomSheet>
-      <Center
-        style={{
-          position: "absolute",
-          paddingBottom: 20,
-          paddingTop: 6,
-          bottom: 0,
-          backgroundColor: "rgb(240,240,240)",
-          width: "100%",
-        }}
-      >
-        <Button>Add to fridge</Button>
-      </Center>
+      {onAddItem && onAddItemManually && (
+        <HStack
+          style={{
+            position: "absolute",
+            justifyContent: "space-around",
+            paddingBottom: 20,
+            paddingTop: 6,
+            bottom: 0,
+            backgroundColor: "rgb(240,240,240)",
+            width: "100%",
+          }}
+        >
+          <Button
+            variant={"outline"}
+            colorScheme={"red"}
+            onPress={onAddItemManually}
+          >
+            Add manually
+          </Button>
+
+          <Button colorScheme={"green"} onPress={() => onAddItem(product)}>
+            Add to fridge
+          </Button>
+        </HStack>
+      )}
     </>
   );
 }
