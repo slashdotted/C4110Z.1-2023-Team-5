@@ -1,19 +1,23 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Button, Spinner } from "native-base";
+import { Button } from "native-base";
 import { OpenFoodFactsApi } from "openfoodfac-ts";
 import React, { useState, useEffect } from "react";
 import ItemSheet from "../components/ItemSheet";
 import { ScannerStackScreenProps } from "../types";
 import { Product } from "../constants/Types";
 import FullScreenLoader from "../components/FullScreenLoader";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../storage/reducers/productsReducer";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
 export default function ScannerScreen({
   navigation,
 }: ScannerStackScreenProps<"Scanner">) {
+  const dispatch = useDispatch();
+
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
@@ -98,6 +102,7 @@ export default function ScannerScreen({
             setStatus("Looking for a barcode...");
           }}
           onAddItem={(product) => {
+            dispatch(addProduct(product));
             console.log("TODO: Add item", product);
           }}
           onAddItemManually={() => navigation.navigate("AddProduct")}
