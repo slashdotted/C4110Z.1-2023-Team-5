@@ -6,22 +6,14 @@ import BottomSheet, {
 import { Center, Image, HStack, Box, Button, View } from "native-base";
 import { SvgUri } from "react-native-svg";
 import { Text } from "./Themed";
-import { Product } from "openfoodfac-ts/dist/OpenFoodFactsApi/types/product";
+import { Product } from "../constants/Types";
 
 interface ItemSheetProps {
   onClose: () => void;
   product: Product;
 }
 
-interface ProductInfo extends Product {
-  nova_group: number;
-  ecoscore_grade: string;
-  nutriscore_grade: string;
-}
-
 export default function ItemSheet({ onClose, product }: ItemSheetProps) {
-  let item = product as ProductInfo;
-
   return (
     <>
       <BottomSheet
@@ -46,7 +38,7 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
         }}
       >
         <Center mb={2}>
-          <Text style={styles.title}>{item.product_name}</Text>
+          <Text style={styles.title}>{product.product_name}</Text>
         </Center>
         <Center
           backgroundColor={"white"}
@@ -55,8 +47,8 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
           padding={5}
         >
           <Image
-            src={item.image_url}
-            alt={item.product_name}
+            src={product.image_url}
+            alt={product.product_name}
             resizeMode={"contain"}
             style={{
               height: "100%",
@@ -71,7 +63,7 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
             height={60}
             viewBox="0 0 240 130"
             uri={`https://static.openfoodfacts.org/images/attributes/nutriscore-${
-              item.nutriscore_grade || "unknown"
+              product.nutriscore_grade || "unknown"
             }.svg`}
           />
 
@@ -80,7 +72,7 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
             height={60}
             viewBox="0 0 240 130"
             uri={`https://static.openfoodfacts.org/images/attributes/ecoscore-${
-              item.ecoscore_grade || "unknown"
+              product.ecoscore_grade || "unknown"
             }.svg`}
           />
 
@@ -89,7 +81,7 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
             height={60}
             viewBox="0 0 68 130"
             uri={`https://static.openfoodfacts.org/images/attributes/nova-group-${
-              item.nova_group || "unknown"
+              product.nova_group || "unknown"
             }.svg`}
           />
         </HStack>
@@ -106,11 +98,11 @@ export default function ItemSheet({ onClose, product }: ItemSheetProps) {
           backgroundColor={"white"}
         >
           <BottomSheetFlatList
-            data={item.ingredients}
+            data={product.ingredients_text.split(",")}
             renderItem={({ item }) => (
-              <Text style={styles.ingredient}>{item.text}</Text>
+              <Text style={styles.ingredient}>{item}</Text>
             )}
-            keyExtractor={(item) => item.text || ""}
+            keyExtractor={(item) => item}
             ListFooterComponent={<View />}
           />
         </Box>

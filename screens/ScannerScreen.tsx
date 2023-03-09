@@ -3,10 +3,10 @@ import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Button } from "native-base";
 import { OpenFoodFactsApi } from "openfoodfac-ts";
-import { Product } from "openfoodfac-ts/dist/OpenFoodFactsApi/types";
 import React, { useState, useEffect } from "react";
 import ItemSheet from "../components/ItemSheet";
 import { ScannerStackScreenProps } from "../types";
+import { Product } from "../constants/Types";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
@@ -46,7 +46,7 @@ export default function ScannerScreen({
       .findProductByBarcode(data)
       .then((product) => {
         setStatus("Product found!");
-        setProduct(product);
+        setProduct(product as Product);
       })
       .catch((error) => {
         setStatus("Product not found!");

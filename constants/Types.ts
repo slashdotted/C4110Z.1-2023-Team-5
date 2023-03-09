@@ -5,6 +5,29 @@ export type Item = {
   level: number;
 };
 
+export type Product = {
+  product_name: string;
+  brands: string;
+  categories: string;
+  image_url: string;
+  ingredients_text: string;
+  ecoscore_grade: "A" | "B" | "C" | "D" | "E" | "unknown";
+  nova_group: 1 | 2 | 3 | 4 | "unknown";
+  nutriscore_grade: "A" | "B" | "C" | "D" | "E" | "unknown";
+  nutrient_levels: {
+    fat: string;
+    salt: string;
+    saturated_fat: string;
+    sugars: string;
+  };
+};
+
+export type FridgeItem = {
+  id: string;
+  product: Product;
+  expirationDate: Date;
+};
+
 export type Notification = {
   id: number;
   title: string;
