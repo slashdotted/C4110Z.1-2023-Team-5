@@ -127,6 +127,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
             <Text>There are no items in your Fridge</Text>
           </Center>
         }
+        numColumns={2}
       />
       {selectedItem && (
         <ItemSheet
