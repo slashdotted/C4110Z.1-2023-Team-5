@@ -40,16 +40,7 @@ export default function FridgeListItem({
     }
 
     return (
-        <Swipeable
-            containerStyle={styles.container}
-            renderRightActions={() => (
-                <SwipableDeleteButton
-                    onDelete={() => {
-                        onDelete(item);
-                    }}
-                />
-            )}
-        >
+        
             <Pressable
                 onPress={() => {
                     onPress(item);
@@ -86,7 +77,6 @@ export default function FridgeListItem({
                     </Text>
                 </VStack>
             </Pressable>
-        </Swipeable>
     );
 }
 
@@ -99,15 +89,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         borderRadius: 15,
-        justifyContent: "space-between",  
+        justifyContent: "space-between", 
+        flex: 1,
+        margin: 5, 
     },
     expDate: {
         alignContent: "flex-end",
         marginBottom: 10,
         color: "#404040"
-    },
-    container: {
-        flex: 1,
-        margin: 5,
     },
 });
