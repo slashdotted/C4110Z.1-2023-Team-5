@@ -11,9 +11,9 @@ export type Product = {
   categories: string;
   image_url: string;
   ingredients_text: string;
-  ecoscore_grade: "A" | "B" | "C" | "D" | "E" | "unknown";
+  ecoscore_grade: "a" | "b" | "c" | "d" | "e" | "unknown";
   nova_group: 1 | 2 | 3 | 4 | "unknown";
-  nutriscore_grade: "A" | "B" | "C" | "D" | "E" | "unknown";
+  nutriscore_grade: "a" | "b" | "c" | "d" | "e" | "unknown";
   nutrient_levels: {
     fat: string;
     salt: string;
