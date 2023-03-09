@@ -1,17 +1,18 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
-import { Text } from "../components/Themed";
+import { Text } from "./Themed";
 import { Pressable, StyleSheet } from "react-native";
-import { Item } from "../constants/Types";
+import { FridgeItem, Item } from "../constants/Types";
 import SwipableDeleteButton from "./SwipeableDeleteButton";
+import expirationLevel from "../utils/expirationLevel";
 
 type FridgeItemProps = {
-  item: Item;
+  item: FridgeItem;
   onPress: () => void;
-  onDelete: (item: Item) => void;
+  onDelete: (item: FridgeItem) => void;
 };
 
-export default function FridgeItem({
+export default function FridgeListItem({
   item,
   onPress,
   onDelete,
@@ -22,12 +23,14 @@ export default function FridgeItem({
   };
   let icon = { name: "exclamation", color: "red" };
 
-  if (item.level == 2) {
+  var level = expirationLevel(item);
+
+  if (level == 2) {
     style.borderColor = "#FF9900";
     style.backgroundColor = "rgba(255, 153, 0, 0.2)";
     icon.name = "warning";
     icon.color = "#FF9900";
-  } else if (item.level == 3) {
+  } else if (level == 3) {
     style.borderColor = "#15803D";
     style.backgroundColor = "rgba(21, 128, 61, 0.2)";
     icon.name = "check-square-o";
@@ -51,7 +54,7 @@ export default function FridgeItem({
           color={icon.color}
           style={{ marginRight: 15 }}
         />
-        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.title}>{item.title}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.title}>{item.product.product_name}</Text>
         <Text style={styles.expDate}>
           {item.expirationDate.toLocaleDateString()}
         </Text>

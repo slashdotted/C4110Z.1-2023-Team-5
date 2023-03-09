@@ -4,80 +4,80 @@ import { Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { FlatList } from "react-native";
 import { Center } from "native-base";
-import { Item } from "../constants/Types";
-import FridgeItem from "../components/FridgeItem";
+import { FridgeItem } from "../constants/Types";
+import FridgeListItem from "../components/FridgeListItem";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
-  const [items, setItems] = useState<Item[]>(
+  const [items, setItems] = useState<FridgeItem[]>(
     [
       {
         id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-        title: "First Item asd asd jbsd hfb sj hf hdjfhsf uuy udfbs jyhyjfhdf kyxhyf kbfjsdhbf hs hsb js",
+        product: {
+          product_name: "First Product",
+          brands: "Ferrero",
+          categories: "Categories",
+          image_url: "Img URL",
+          ingredients_text: "Ingredients",
+          ecoscore_grade: "A" as const,
+          nova_group: 1 as const,
+          nutriscore_grade: "A" as const,
+          nutrient_levels: {
+            fat: "fat",
+            salt: "salt",
+            saturated_fat: "sat fat",
+            sugars: "sugars",
+          },
+        },
         expirationDate: new Date(2023, 3, 2),
-        level: 1,
       },
       {
-        id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-        title: "Second Item",
-        expirationDate: new Date(2023, 3, 2),
-        level: 1,
+        id: "bd7acbea-c1b1-46c2-aed5-3adbb28ba",
+        product: {
+          product_name: "Second Product",
+          brands: "Ferrero",
+          categories: "Categories",
+          image_url: "Img URL",
+          ingredients_text: "Ingredients",
+          ecoscore_grade: "A" as const,
+          nova_group: 1 as const,
+          nutriscore_grade: "A" as const,
+          nutrient_levels: {
+            fat: "fat",
+            salt: "salt",
+            saturated_fat: "sat fat",
+            sugars: "sugars",
+          },
+        },
+        expirationDate: new Date(2023, 2, 15),
       },
       {
-        id: "3ac68afc-c605-48d3-a4f8-fbd9321aa97f63",
-        title: "Fourth Item",
-        expirationDate: new Date(2023, 3, 4),
-        level: 1,
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-145571e29d72",
-        title: "Third Item",
-        expirationDate: new Date(2023, 3, 3),
-        level: 1,
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-1455as71e29d72",
-        title: "Fifth Item",
-        expirationDate: new Date(2023, 3, 5),
-        level: 1,
-      },
-      {
-        id: "bd7acbea-c1b1-46c2-aed5-3ad553abb28ba",
-        title: "Sixth Item",
-        expirationDate: new Date(2023, 3, 6),
-        level: 1,
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-1453571e29d72",
-        title: "Eight Item",
-        expirationDate: new Date(2023, 3, 8),
-        level: 2,
-      },
-      {
-        id: "3ac68afc-c605-48d3-a4f8-fbd941aa97f63",
-        title: "Seventh Item",
-        expirationDate: new Date(2023, 3, 7),
-        level: 2,
-      },
-      {
-        id: "3ac68afc-c605-48d3-a4f8-fbd29321aa97f63",
-        title: "Ninth Item",
-        expirationDate: new Date(2023, 3, 10),
-        level: 3,
-      },
-      {
-        id: "58694a0f-3da1-471f-bd96-14515as71e29d72",
-        title: "Tenth Item",
-        expirationDate: new Date(2023, 3, 11),
-        level: 3,
+        id: "bd7acbea-c1b1-aed5-3ad53abb28ba",
+        product: {
+          product_name: "Third Product",
+          brands: "Ferrero",
+          categories: "Categories",
+          image_url: "Img URL",
+          ingredients_text: "Ingredients",
+          ecoscore_grade: "A" as const,
+          nova_group: 1 as const,
+          nutriscore_grade: "A" as const,
+          nutrient_levels: {
+            fat: "fat",
+            salt: "salt",
+            saturated_fat: "sat fat",
+            sugars: "sugars",
+          },
+        },
+        expirationDate: new Date(2023, 2, 12),
       },
     ].sort((a, b) =>
       a.expirationDate.getTime() >= b.expirationDate.getTime() ? 1 : -1
     )
   );
 
-  const renderItem = ({ item }: { item: Item }) => {
+  const renderItem = ({ item }: { item: FridgeItem }) => {
     return (
-      <FridgeItem
+      <FridgeListItem
         item={item}
         onPress={() => {
           console.log("TODO: show item details");
