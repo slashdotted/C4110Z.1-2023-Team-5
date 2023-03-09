@@ -75,6 +75,12 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
     )
   );
 
+  const [itemsLongPressed, addItem] = useState<FridgeItem[]>(
+    [
+    
+    ]
+  );
+
   const renderItem = ({ item }: { item: FridgeItem }) => {
     return (
       <FridgeListItem
@@ -82,9 +88,20 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
         onPress={() => {
           console.log("TODO: show item details");
         }}
+        onLongPress={
+          (item) => {
+            let index = itemsLongPressed.indexOf(item);
+            if(index != -1){
+              addItem(old => old.filter(i => i.id != item.id))
+            }else{
+              addItem(old => [...old, item])
+            }
+          }
+        }
         onDelete={(item) =>
           setItems((prev) => prev.filter((n) => n.id !== item.id))
         }
+        selected={itemsLongPressed.includes(item)}
       />
     );
   };
