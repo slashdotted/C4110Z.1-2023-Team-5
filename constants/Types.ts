@@ -1,10 +1,3 @@
-export type Item = {
-  id: string;
-  title: string;
-  expirationDate: Date;
-  level: number;
-};
-
 export type Product = {
   product_name: string;
   brands: string;
@@ -25,14 +18,14 @@ export type Product = {
 export type FridgeItem = {
   id: string;
   product: Product;
-  expirationDate: Date;
+  expirationDate: string;
 };
 
 export type Notification = {
   id: number;
   title: string;
   status: "error" | "warning" | "info" | "success";
-  date: Date;
+  date: string;
 };
 
 export interface FoodBank {

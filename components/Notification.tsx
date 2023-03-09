@@ -23,7 +23,7 @@ export default function Notification({
         <HStack style={styles.container}>
           <Text>{notification.title}</Text>
           <Badge colorScheme={notification.status}>
-            {notification.date.toLocaleDateString()}
+            {new Date(notification.date).toLocaleDateString()}
           </Badge>
         </HStack>
       </Alert>

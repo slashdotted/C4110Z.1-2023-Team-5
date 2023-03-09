@@ -12,7 +12,7 @@ const initialState: NotificationsState = {
       id: 1,
       title: "Notification 1",
       status: "success",
-      date: new Date(),
+      date: new Date().toISOString(),
     },
   ],
 };
