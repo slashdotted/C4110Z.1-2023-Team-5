@@ -8,7 +8,7 @@ import expirationLevel from "../utils/expirationLevel";
 
 type FridgeItemProps = {
     item: FridgeItem;
-    onPress: () => void;
+    onPress: (item: FridgeItem) => void;
     onLongPress: (item: FridgeItem) => void;
     onDelete: (item: FridgeItem) => void;
     selected: boolean;
@@ -53,7 +53,9 @@ export default function FridgeListItem({
             )}
         >
             <Pressable
-                onPress={onPress}
+                onPress={() => {
+                  onPress(item)
+                }}
                 onLongPress={() => {
                     onLongPress(item);
                 }}
