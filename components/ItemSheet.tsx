@@ -21,6 +21,10 @@ export default function ItemSheet({
   onAddItem,
   onAddItemManually,
 }: ItemSheetProps) {
+  const ingredients = [...new Set(product.ingredients_text.split(","))].map(
+    (i) => i.trim()
+  );
+
   return (
     <>
       <BottomSheet
@@ -105,7 +109,7 @@ export default function ItemSheet({
           backgroundColor={"white"}
         >
           <BottomSheetFlatList
-            data={product.ingredients_text.split(",")}
+            data={ingredients}
             renderItem={({ item }) => (
               <Text style={styles.ingredient}>{item}</Text>
             )}

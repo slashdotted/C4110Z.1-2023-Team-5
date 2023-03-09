@@ -25,11 +25,6 @@ export default function ScannerScreen({
     };
 
     getBarCodeScannerPermissions();
-
-    handleBarCodeScanned({
-      type: "test",
-      data: "3017620425035",
-    });
   }, []);
 
   const handleBarCodeScanned = ({
