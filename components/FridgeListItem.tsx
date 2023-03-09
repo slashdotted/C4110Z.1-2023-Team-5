@@ -3,7 +3,6 @@ import { Swipeable } from "react-native-gesture-handler";
 import { Text } from "./Themed";
 import { Pressable, StyleSheet } from "react-native";
 import { FridgeItem } from "../constants/Types";
-import { FridgeItem } from "../constants/Types";
 import SwipableDeleteButton from "./SwipeableDeleteButton";
 import expirationLevel from "../utils/expirationLevel";
 import { VStack, Image } from "native-base";
@@ -81,7 +80,7 @@ export default function FridgeListItem({
                     </Text>
 
                     <Text style={styles.expDate}>
-                        {item.expirationDate.toLocaleDateString()}
+                        {new Date(item.expirationDate).toLocaleDateString()}
                     </Text>
                 </VStack>
             </Pressable>
