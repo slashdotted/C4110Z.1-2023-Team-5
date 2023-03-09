@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 import { Text, View } from "../components/Themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Button } from "native-base";
+import { Button, Spinner } from "native-base";
 import { OpenFoodFactsApi } from "openfoodfac-ts";
 import React, { useState, useEffect } from "react";
 import ItemSheet from "../components/ItemSheet";
 import { ScannerStackScreenProps } from "../types";
 import { Product } from "../constants/Types";
+import FullScreenLoader from "../components/FullScreenLoader";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
@@ -17,6 +18,7 @@ export default function ScannerScreen({
   const [scanned, setScanned] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [status, setStatus] = useState<string>("Looking for a barcode...");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -25,6 +27,11 @@ export default function ScannerScreen({
     };
 
     getBarCodeScannerPermissions();
+
+    handleBarCodeScanned({
+      type: "test",
+      data: "3017620425035",
+    });
   }, []);
 
   const handleBarCodeScanned = ({
@@ -34,6 +41,7 @@ export default function ScannerScreen({
     type: string;
     data: string;
   }) => {
+    setLoading(true);
     setScanned(true);
 
     console.log(
@@ -51,6 +59,9 @@ export default function ScannerScreen({
       .catch((error) => {
         setStatus("Product not found!");
         console.error(error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -63,6 +74,8 @@ export default function ScannerScreen({
 
   return (
     <View style={styles.container}>
+      {loading && <FullScreenLoader />}
+
       {!product && (
         <Button
           style={styles.addButton}
