@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { Text } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { FlatList } from "react-native";
-import { Center } from "native-base";
+import { Center, Fab } from "native-base";
 import { FridgeItem } from "../constants/Types";
 import FridgeListItem from "../components/FridgeListItem";
 import ItemSheet from "../components/ItemSheet";
+import RecipeSheet from "../components/RecipeSheet";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
     const [items, setItems] = useState<FridgeItem[]>(
@@ -93,6 +94,8 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
 
     const [selectedItem, setSelectedItem] = useState<FridgeItem | null>();
 
+    const [showRecipe, setShowRecipe] = useState<boolean>(false);
+
     const renderItem = ({ item }: { item: FridgeItem }) => {
         return (
             <FridgeListItem
@@ -141,6 +144,27 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
                     }}
                 />
             )}
+            {itemsLongPressed.length > 0 && !showRecipe && (
+                <Fab
+                    style={styles.fab}
+                    renderInPortal={false}
+                    position="absolute"
+                    size="md"
+                    label="Generate recipe"
+                    right={5}
+                    bottom={10}
+                    onPress={() => setShowRecipe(true)}
+                />
+            )}
+            {showRecipe && (
+                <RecipeSheet
+                    onClose={() => {
+                        setShowRecipe(false);
+                        addItem([]);
+                    }}
+                    products={itemsLongPressed}
+                />
+            )}
         </View>
     );
 }
@@ -150,5 +174,8 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: "white",
+    },
+    fab: {
+        backgroundColor: "gray",
     },
 });
