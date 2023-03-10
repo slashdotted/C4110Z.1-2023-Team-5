@@ -1,9 +1,15 @@
 import { StyleSheet } from "react-native";
+import React, { useState } from "react";
 import BottomSheet, {
     BottomSheetBackdrop,
     BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
-import { Center, Image, HStack, Box, Button, View, FlatList } from "native-base";
+import {
+    Box,
+    Button,
+    FlatList,
+    AlertDialog
+} from "native-base";
 import { SvgUri } from "react-native-svg";
 import { Text } from "./Themed";
 import { FridgeItem, Product } from "../constants/Types";
@@ -14,6 +20,9 @@ interface ItemSheetProps {
 }
 
 export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const cancelRef = React.useRef(null);
+
     return (
         <>
             <BottomSheet
@@ -38,6 +47,38 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
                 }}
             >
                 {/* TODO : add call to Open AI APIs */}
+                <Box style={styles.disclaimerBox}>
+                    <Button colorScheme="danger" variant={"outline"} size="sm" onPress={() => setIsOpen(!isOpen)}>
+                        Disclaimer
+                    </Button>
+
+                    <AlertDialog
+                        leastDestructiveRef={cancelRef}
+                        isOpen={isOpen}
+                        onClose={onClose}
+                    >
+                        <AlertDialog.Content>
+                            <AlertDialog.CloseButton />
+                            <AlertDialog.Header>
+                                Disclaimer
+                            </AlertDialog.Header>
+                            <AlertDialog.Body>
+                            The recipes provided on this website are for informational purposes only and are not guaranteed to be 100% accurate. We do not take responsibility for any errors or omissions in the recipes or for any adverse effects resulting from the use of the recipes provided on this website. It is the responsibility of the user to verify the accuracy of the recipes and to use their own judgment when preparing and consuming any food based on these recipes.
+                            </AlertDialog.Body>
+                            <AlertDialog.Footer>
+                                    <Button
+                                        variant="unstyled"
+                                        colorScheme="coolGray"
+                                        onPress={onClose}
+                                        ref={cancelRef}
+                                    >
+                                        Close
+                                    </Button>
+                            </AlertDialog.Footer>
+                        </AlertDialog.Content>
+                    </AlertDialog>
+                </Box>
+
                 <Text style={styles.title}>Selected Products</Text>
                 <Box
                     my={2}
@@ -49,7 +90,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
                     }}
                     backgroundColor={"white"}
                 >
-                    <FlatList 
+                    <FlatList
                         data={products}
                         renderItem={({ item }) => (
                             <Text>{item.product.product_name}</Text>
@@ -69,5 +110,9 @@ const styles = StyleSheet.create({
     ingredient: {
         fontSize: 18,
         marginVertical: 2,
+    },
+    disclaimerBox: {
+        alignItems: "center",
+        marginBottom: 25,
     },
 });
