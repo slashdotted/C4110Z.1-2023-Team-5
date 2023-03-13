@@ -74,6 +74,7 @@ const renderItem = ({ item }: { item: FoodBank }) => {
 export default function CHEFoodBanks() {
   return (
     <FlatList
+      paddingTop={2}
       data={foodBanks.sort((a, b) => a.name.localeCompare(b.name))}
       renderItem={renderItem}
     />
