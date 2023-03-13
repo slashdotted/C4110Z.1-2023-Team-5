@@ -20,6 +20,8 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@reduxjs/toolkit": "^1.9.3",
+    "@turf/boolean-point-in-polygon": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
     "expo": "~47.0.12",
     "expo-asset": "~8.7.0",
     "expo-barcode-scanner": "~12.1.0",

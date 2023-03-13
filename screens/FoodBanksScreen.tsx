@@ -7,6 +7,7 @@ import { FoodBank } from "../constants/Types";
 import FoodBankSheet from "../components/FoodBankSheet";
 import * as FoodBanks from "../assets/foodbanks.json";
 import * as Location from "expo-location";
+import findCountryByCoordinate from "../utils/findCountryByCoordinate";
 
 export default function FoodBanksScreen() {
   const ref = useRef<MapView>(null);
@@ -14,6 +15,7 @@ export default function FoodBanksScreen() {
   const [selectedFoodBank, setSelectedFoodBank] = useState<
     FoodBank | undefined
   >(undefined);
+  const [country, setCountry] = useState<string | undefined>(undefined);
 
   const goToCoordinates = (latitude: number, longitude: number) => {
     if (ref.current) {
@@ -33,6 +35,12 @@ export default function FoodBanksScreen() {
         let location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.High,
         });
+
+        const country = findCountryByCoordinate(
+          location.coords.latitude,
+          location.coords.longitude
+        ).code;
+        setCountry(country);
 
         goToCoordinates(location.coords.latitude, location.coords.longitude);
       }
