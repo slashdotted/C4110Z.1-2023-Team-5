@@ -1,32 +1,17 @@
 import { StyleSheet } from "react-native";
 import { View } from "../components/Themed";
-import React, { useEffect, useRef, useState } from "react";
-import MapView, { Geojson } from "react-native-maps";
-import BottomSheet from "@gorhom/bottom-sheet";
-import { FoodBank } from "../constants/Types";
-import FoodBankSheet from "../components/FoodBankSheet";
-import * as FoodBanks from "../assets/foodbanks.json";
+import React, { useEffect, useMemo, useState } from "react";
 import * as Location from "expo-location";
 import findCountryByCoordinate from "../utils/findCountryByCoordinate";
+import { Text } from "../components/Themed";
+import USAFoodBanks from "../components/USAFoodBanks";
+import CHEFoodBanks from "../components/CHEFoodBanks";
 
 export default function FoodBanksScreen() {
-  const ref = useRef<MapView>(null);
-  const bottomSheet = useRef<BottomSheet>(null);
-  const [selectedFoodBank, setSelectedFoodBank] = useState<
-    FoodBank | undefined
-  >(undefined);
+  const [location, setLocation] = useState<Location.LocationObject | undefined>(
+    undefined
+  );
   const [country, setCountry] = useState<string | undefined>(undefined);
-
-  const goToCoordinates = (latitude: number, longitude: number) => {
-    if (ref.current) {
-      ref.current.animateToRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-      });
-    }
-  };
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -40,56 +25,39 @@ export default function FoodBanksScreen() {
           location.coords.latitude,
           location.coords.longitude
         ).code;
-        setCountry(country);
 
-        goToCoordinates(location.coords.latitude, location.coords.longitude);
+        setCountry(country);
+        setLocation(location);
       }
     };
 
     getUserLocation();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <MapView
-        ref={ref}
-        style={styles.map}
-        showsUserLocation={true}
-        showsCompass={true}
-        showsScale={true}
-        showsMyLocationButton={true}
-      >
-        <Geojson
-          geojson={FoodBanks as GeoJSON.FeatureCollection<GeoJSON.Point>}
-          strokeColor="red"
-          fillColor="green"
-          strokeWidth={2}
-          onPress={(e) => {
-            const coordinates = e.coordinates as {
-              latitude: number;
-              longitude: number;
-            };
-            goToCoordinates(coordinates.latitude, coordinates.longitude);
+  const countryFoodBanks = useMemo(() => {
+    switch (country) {
+      case "USA":
+        return <USAFoodBanks initialLocation={location} />;
+      case "CHE":
+        return <CHEFoodBanks />;
+      default:
+        return (
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text>
+              Your country is currently not supported for this feature.
+            </Text>
+          </View>
+        );
+    }
+  }, [country, location]);
 
-            bottomSheet.current?.expand();
-            setSelectedFoodBank(e as FoodBank);
-          }}
-        />
-      </MapView>
-      <FoodBankSheet
-        ref={bottomSheet}
-        foodBank={selectedFoodBank}
-        onClose={() => setSelectedFoodBank(undefined)}
-      />
-    </View>
-  );
+  return <View style={styles.container}>{countryFoodBanks}</View>;
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  map: {
     flex: 1,
   },
 });
