@@ -46,9 +46,22 @@ export default function Navigation({
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
-  const dispatch = useDispatch();
+const NotificationsIcon = () => {
+  const navigation = useNavigation();
+  const notifications = useSelector(
+    (state: RootState) => state.notifications.notifications.length
+  );
 
+  return (
+    <IconWithBadge
+      onPress={() => navigation.navigate("Notifications")}
+      icon={"bell-o"}
+      count={notifications}
+    />
+  );
+};
+
+function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -85,14 +98,17 @@ function ScannerNavigator() {
         name="Scanner"
         component={ScannerScreen}
         options={{
-          headerShown: false,
+          title: "Add grocery",
+          headerRight: () => <NotificationsIcon />,
         }}
       />
       <ScannerStack.Screen
         name="AddProduct"
         component={AddProductScreen}
         options={{
-          headerShown: false,
+          title: "Add product",
+          headerBackTitle: "Back",
+          headerRight: () => <NotificationsIcon />,
         }}
       />
     </ScannerStack.Navigator>
@@ -103,24 +119,13 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-  const navigation = useNavigation();
-
-  const notifications = useSelector(
-    (state: RootState) => state.notifications.notifications.length
-  );
 
   return (
     <BottomTab.Navigator
       initialRouteName="Fridge"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        headerRight: () => (
-          <IconWithBadge
-            onPress={() => navigation.navigate("Notifications")}
-            icon={"bell-o"}
-            count={notifications}
-          />
-        ),
+        headerRight: () => <NotificationsIcon />,
       }}
     >
       <BottomTab.Screen
@@ -135,6 +140,7 @@ function BottomTabNavigator() {
         name="ScannerNavigator"
         component={ScannerNavigator}
         options={{
+          headerShown: false,
           title: "Add grocery",
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
