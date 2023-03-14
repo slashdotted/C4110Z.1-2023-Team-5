@@ -14,7 +14,7 @@ import notificatonsReducer from "./reducers/notificatonsReducer";
 import productsReducer from "./reducers/productsReducer";
 
 const persistConfig = {
-  key: "root",
+  key: "foodx",
   storage: AsyncStorage,
 };
 
