@@ -12,7 +12,7 @@ interface ItemSheetProps {
     onClose: () => void;
     product: Product;
     onAddItem?: (product: Product) => void;
-    onAddItemManually?: () => void;
+    onContinue?: () => void;
     onDeleteItem?: (item: Product) => void;
 }
 
@@ -20,7 +20,7 @@ export default function ItemSheet({
     onClose,
     product,
     onAddItem,
-    onAddItemManually,
+    onContinue,
     onDeleteItem,
 }: ItemSheetProps) {
     const ingredients = [...new Set(product.ingredients_text.split(","))].map(
@@ -147,7 +147,7 @@ export default function ItemSheet({
                     </HStack>
                 )}
             </BottomSheet>
-            {onAddItem && onAddItemManually && (
+            {onAddItem && onContinue && (
                 <HStack
                     style={{
                         position: "absolute",
@@ -161,17 +161,10 @@ export default function ItemSheet({
                 >
                     <Button
                         variant={"outline"}
-                        colorScheme={"red"}
-                        onPress={onAddItemManually}
+                        colorScheme={"blue"}
+                        onPress={onContinue}
                     >
-                        Add manually
-                    </Button>
-
-                    <Button
-                        colorScheme={"green"}
-                        onPress={() => onAddItem(product)}
-                    >
-                        Add to fridge
+                        Continue
                     </Button>
                 </HStack>
             )}
