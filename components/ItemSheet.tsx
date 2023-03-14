@@ -7,6 +7,11 @@ import { Center, Image, HStack, Box, Button, View } from "native-base";
 import { SvgUri } from "react-native-svg";
 import { Text } from "./Themed";
 import { FridgeItem, Product } from "../constants/Types";
+import {
+  getEcoScoreImage,
+  getNovaGroupImage,
+  getNutriscoreImage,
+} from "../utils/scoreImages";
 
 interface ItemSheetProps {
   onClose: () => void;
@@ -75,27 +80,21 @@ export default function ItemSheet({
             width={100}
             height={60}
             viewBox="0 0 240 130"
-            uri={`https://static.openfoodfacts.org/images/attributes/nutriscore-${
-              product.nutriscore_grade || "unknown"
-            }.svg`}
+            uri={getNutriscoreImage(product.nutriscore_grade)}
           />
 
           <SvgUri
             width={100}
             height={60}
             viewBox="0 0 240 130"
-            uri={`https://static.openfoodfacts.org/images/attributes/ecoscore-${
-              product.ecoscore_grade || "unknown"
-            }.svg`}
+            uri={getEcoScoreImage(product.ecoscore_grade)}
           />
 
           <SvgUri
             width={100}
             height={60}
             viewBox="0 0 68 130"
-            uri={`https://static.openfoodfacts.org/images/attributes/nova-group-${
-              product.nova_group || "unknown"
-            }.svg`}
+            uri={getNovaGroupImage(product.nova_group)}
           />
         </HStack>
 
