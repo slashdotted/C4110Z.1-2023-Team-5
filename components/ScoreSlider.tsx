@@ -7,6 +7,7 @@ import { SvgUri } from "react-native-svg";
 interface ScoreSliderProps {
   images: string[];
   initial?: number;
+  onChange?: (value: number) => void;
   viewBox?: string;
 }
 
@@ -14,6 +15,7 @@ export default function ScoreSlider({
   images,
   viewBox,
   initial,
+  onChange,
 }: ScoreSliderProps) {
   const [value, setValue] = useState<number>(initial || 0);
 
@@ -35,6 +37,8 @@ export default function ScoreSlider({
         onValueChange={(value) => {
           // @ts-ignore
           setValue(value);
+          // @ts-ignore
+          onChange?.(value);
         }}
         step={1}
         minimumValue={0}
