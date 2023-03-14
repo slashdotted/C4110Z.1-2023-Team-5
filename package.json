@@ -41,6 +41,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-autocomplete-dropdown": "github:filippofinke/react-native-autocomplete-dropdown",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-maps": "1.3.2",
     "react-native-open-maps": "^0.4.0",

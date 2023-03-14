@@ -1,41 +1,43 @@
-import { View, Text, Button, Center, Box, Input } from "native-base";
+import { View, Text, Button, Center, Box, Input, Container } from "native-base";
 import { ScannerStackScreenProps } from "../types";
 import { StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
 import React, { useState } from "react";
+import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 
 export default function AddProductScreen({
-    navigation,
+  navigation,
 }: ScannerStackScreenProps<"AddProduct">) {
-  const [value, setValue] = useState<number>(3); 
+  const [value, setValue] = useState<number>(3);
 
-    return (
-        <View style={styles.view}>
-            <Center>
-                <Text>Add Product Screen</Text>
-                <Box alignItems="center" style={styles.form}>
-                    <Input placeholder="Product Name" variant="filled" />
-                    <Text marginTop={5}>TODO: Add Image</Text>
+  return (
+    <View style={styles.view}>
+      <Container size={"lg"} marginX={"auto"} style={styles.container}>
+        <AutocompleteDropdown containerStyle={styles.productName} />
 
-                    <Slider
-                        value={value}
-                        onValueChange={() => setValue}
-                        step={5}
-                    />
-                </Box>
-                <Button onPress={navigation.goBack}>Go back</Button>
-            </Center>
-        </View>
-    );
+        <Slider
+          containerStyle={styles.slider}
+          value={value}
+          onValueChange={() => setValue}
+          step={5}
+        />
+      </Container>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    form: {
-        marginVertical: 30,
-        marginHorizontal: 40,
-    },
-    view: {
-        backgroundColor: "white",
-        flex: 1,
-    },
+  container: {
+    marginTop: 15,
+  },
+  productName: {
+    width: "100%",
+  },
+  slider: {
+    width: "100%",
+  },
+  view: {
+    backgroundColor: "white",
+    flex: 1,
+  },
 });
