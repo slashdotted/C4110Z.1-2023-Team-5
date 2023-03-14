@@ -1,8 +1,17 @@
-import { View, Container, Image, Box, Center, HStack } from "native-base";
+import {
+  View,
+  Container,
+  Image,
+  Box,
+  Center,
+  HStack,
+  VStack,
+  Button,
+} from "native-base";
 import { ScannerStackScreenProps } from "../types";
 import { StyleSheet } from "react-native";
 import { Slider } from "@miblanchard/react-native-slider";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutocompleteDropdown,
   TAutocompleteDropdownItem,
@@ -17,6 +26,8 @@ import {
   getNovaGroupImage,
   getNutriscoreImage,
 } from "../utils/scoreImages";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import { addProduct } from "../storage/reducers/productsReducer";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -27,6 +38,7 @@ export default function AddProductScreen({
 }: ScannerStackScreenProps<"AddProduct">) {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.products);
+  const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const dataSet = products.map((product) => {
@@ -37,9 +49,22 @@ export default function AddProductScreen({
     };
   });
 
+  if (productName.length > 0)
+    dataSet.unshift({
+      id: "new",
+      title: productName,
+      product: undefined as any,
+    });
+
+  const handleAddToFridge = () => {
+    if (!selectedProduct) return;
+    console.log("selectedProduct", selectedProduct);
+    dispatch(addProduct(selectedProduct));
+  };
+
   return (
     <View style={styles.view}>
-      <Container size={"lg"} marginX={"auto"} style={styles.container}>
+      <Container size={"lg"} marginX={"auto"} style={styles.container} flex={1}>
         <Center width={"100%"}>
           {selectedProduct ? (
             <Image
@@ -64,7 +89,11 @@ export default function AddProductScreen({
           )}
         </Center>
         <AutocompleteDropdown
-          onClear={() => setSelectedProduct(null)}
+          onClear={() => {
+            setSelectedProduct(null);
+            setProductName("");
+          }}
+          onChangeText={(text) => setProductName(text)}
           onSelectItem={(item?) => {
             let selected = item as TAutocompleteDropdownItem & {
               product: Product;
@@ -105,6 +134,27 @@ export default function AddProductScreen({
           viewBox="0 0 68 130"
           images={novaGroupGrades.map((i) => getNovaGroupImage(i as NovaGroup))}
         />
+
+        <VStack
+          alignItems={"center"}
+          position={"absolute"}
+          bottom={5}
+          justifyContent={"center"}
+          width={"100%"}
+        >
+          <Text
+            style={{
+              fontSize: 17,
+              marginBottom: 10,
+            }}
+          >
+            Best before
+          </Text>
+          <RNDateTimePicker value={new Date()} mode="date" display="default" />
+          <Button marginTop={3} onPress={handleAddToFridge}>
+            Add to the fridge
+          </Button>
+        </VStack>
       </Container>
     </View>
   );
