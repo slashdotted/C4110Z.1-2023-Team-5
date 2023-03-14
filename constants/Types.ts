@@ -1,12 +1,17 @@
+export type EcoScore = "a" | "b" | "c" | "d" | "e" | "unknown";
+export type NovaGroup = 1 | 2 | 3 | 4 | "unknown";
+export type NutriScore = "a" | "b" | "c" | "d" | "e" | "unknown";
+
 export type Product = {
+  barcode: string;
   product_name: string;
   brands: string;
   categories: string;
   image_url: string;
   ingredients_text: string;
-  ecoscore_grade: "a" | "b" | "c" | "d" | "e" | "unknown";
-  nova_group: 1 | 2 | 3 | 4 | "unknown";
-  nutriscore_grade: "a" | "b" | "c" | "d" | "e" | "unknown";
+  ecoscore_grade: EcoScore;
+  nova_group: NovaGroup;
+  nutriscore_grade: NutriScore;
   nutrient_levels: {
     fat: string;
     salt: string;
