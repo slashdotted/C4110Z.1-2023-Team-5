@@ -28,6 +28,7 @@ import {
 } from "../utils/scoreImages";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { addProduct } from "../storage/reducers/productsReducer";
+import NutriScoreA from "../utils/scores/NutriScoreA";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];

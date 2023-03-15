@@ -76,26 +76,15 @@ export default function ItemSheet({
         </Center>
 
         <HStack justifyContent={"space-between"} my={3}>
-          <SvgUri
-            width={100}
-            height={60}
-            viewBox="0 0 240 130"
-            uri={getNutriscoreImage(product.nutriscore_grade)}
-          />
-
-          <SvgUri
-            width={100}
-            height={60}
-            viewBox="0 0 240 130"
-            uri={getEcoScoreImage(product.ecoscore_grade)}
-          />
-
-          <SvgUri
-            width={100}
-            height={60}
-            viewBox="0 0 68 130"
-            uri={getNovaGroupImage(product.nova_group)}
-          />
+          <Box width={100} height={100}>
+            {getNutriscoreImage(product.nutriscore_grade)}
+          </Box>
+          <Box width={100} height={100}>
+            {getEcoScoreImage(product.ecoscore_grade)}
+          </Box>
+          <Box width={100} height={100}>
+            {getNovaGroupImage(product.nova_group)}
+          </Box>
         </HStack>
 
         <Text style={styles.title}>Ingredients</Text>
