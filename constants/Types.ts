@@ -2,6 +2,10 @@ export type EcoScore = "a" | "b" | "c" | "d" | "e" | "unknown";
 export type NovaGroup = 1 | 2 | 3 | 4 | "unknown";
 export type NutriScore = "a" | "b" | "c" | "d" | "e" | "unknown";
 
+export type Ingredient = {
+  name: string;
+};
+
 export type Product = {
   barcode: string;
   product_name: string;

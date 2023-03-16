@@ -4,14 +4,12 @@ import {
   Image,
   Box,
   Center,
-  HStack,
   VStack,
   Button,
 } from "native-base";
 import { ScannerStackScreenProps } from "../types";
 import { StyleSheet } from "react-native";
-import { Slider } from "@miblanchard/react-native-slider";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   AutocompleteDropdown,
   TAutocompleteDropdownItem,
@@ -28,7 +26,6 @@ import {
 } from "../utils/scoreImages";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { addProduct } from "../storage/reducers/productsReducer";
-import NutriScoreA from "../utils/scores/NutriScoreA";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -69,7 +66,7 @@ export default function AddProductScreen({
         <Center width={"100%"}>
           {selectedProduct ? (
             <Image
-              height={150}
+              height={120}
               width={"100%"}
               resizeMode={"contain"}
               source={{
@@ -79,7 +76,7 @@ export default function AddProductScreen({
             />
           ) : (
             <Box
-              height={150}
+              height={120}
               width={"100%"}
               alignItems={"center"}
               justifyContent={"center"}

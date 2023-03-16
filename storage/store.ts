@@ -10,6 +10,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+import ingredientsReducer from "./reducers/ingredientsReducer";
 import notificatonsReducer from "./reducers/notificatonsReducer";
 import productsReducer from "./reducers/productsReducer";
 
@@ -21,6 +22,7 @@ const persistConfig = {
 const reducer = combineReducers({
   notifications: notificatonsReducer,
   products: productsReducer,
+  ingredients: ingredientsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
