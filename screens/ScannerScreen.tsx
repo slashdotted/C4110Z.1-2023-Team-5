@@ -30,10 +30,6 @@ export default function ScannerScreen({
       setHasPermission(status === "granted");
     };
 
-    handleBarCodeScanned({
-      type: "test", data:  "7612100804032"
-    });
-
     getBarCodeScannerPermissions();
   }, []);
 
@@ -102,7 +98,6 @@ export default function ScannerScreen({
           }}
           onAddItem={(product) => {
             dispatch(addProduct(product));
-            console.log("TODO: Add item", product);
           }}
           onContinue={() => navigation.navigate("AddProduct")}
         />
