@@ -6,10 +6,11 @@ import {
   Center,
   VStack,
   Button,
+  HStack,
 } from "native-base";
 import { ScannerStackScreenProps } from "../types";
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   AutocompleteDropdown,
   TAutocompleteDropdownItem,
@@ -26,6 +27,8 @@ import {
 } from "../utils/scoreImages";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { addProduct } from "../storage/reducers/productsReducer";
+import IngredientsList from "../components/IngredientsList";
+import { addFridgeItem } from "../storage/reducers/fridgeReducer";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -38,6 +41,7 @@ export default function AddProductScreen({
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [expiryDate, setExpiryDate] = useState<Date | undefined>(undefined);
 
   const dataSet = products.map((product) => {
     return {
@@ -55,10 +59,27 @@ export default function AddProductScreen({
     });
 
   const handleAddToFridge = () => {
-    if (!selectedProduct) return;
+    if (!selectedProduct || !expiryDate) return;
     console.log("selectedProduct", selectedProduct);
+
     dispatch(addProduct(selectedProduct));
+    dispatch(
+      addFridgeItem({
+        id: -1,
+        product: selectedProduct,
+        expirationDate: expiryDate.toISOString(),
+      })
+    );
+
+    navigation.goBack();
   };
+
+  const defaultIngredients = useMemo(() => {
+    if (!selectedProduct || !selectedProduct.ingredients_text) return [];
+    return selectedProduct.ingredients_text.split(",").map((i) => ({
+      name: i.trim(),
+    }));
+  }, [selectedProduct]);
 
   return (
     <View style={styles.view}>
@@ -133,26 +154,30 @@ export default function AddProductScreen({
           images={novaGroupGrades.map((i) => getNovaGroupImage(i as NovaGroup))}
         />
 
-        <VStack
-          alignItems={"center"}
-          position={"absolute"}
-          bottom={5}
-          justifyContent={"center"}
-          width={"100%"}
-        >
-          <Text
-            style={{
-              fontSize: 17,
-              marginBottom: 10,
-            }}
-          >
-            Best before
-          </Text>
-          <RNDateTimePicker value={new Date()} mode="date" display="default" />
-          <Button marginTop={3} onPress={handleAddToFridge}>
-            Add to the fridge
+        <IngredientsList defaultIngredients={defaultIngredients} />
+
+        <Center w={"full"}>
+          <HStack alignItems={"center"}>
+            <Text
+              style={{
+                fontSize: 18,
+              }}
+            >
+              Best before:
+            </Text>
+            <RNDateTimePicker
+              value={expiryDate || new Date()}
+              onChange={(event, date) => {
+                if (date) setExpiryDate(date);
+              }}
+              mode="date"
+              display="default"
+            />
+          </HStack>
+          <Button mt={2} onPress={handleAddToFridge}>
+            Add to fridge
           </Button>
-        </VStack>
+        </Center>
       </Container>
     </View>
   );
