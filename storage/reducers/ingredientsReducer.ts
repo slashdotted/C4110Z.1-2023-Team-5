@@ -7,14 +7,7 @@ export interface IngredientsState {
 }
 
 const initialState: IngredientsState = {
-  ingredients: [
-    {
-      name: "Sugar",
-    },
-    {
-      name: "Salt",
-    },
-  ],
+  ingredients: [],
 };
 
 export const ingredientsSlice = createSlice({
@@ -22,10 +15,12 @@ export const ingredientsSlice = createSlice({
   initialState,
   reducers: {
     addIngredient: (state, action: PayloadAction<Ingredient>) => {
-      // check if ingredient already exists
+      action.payload.name = action.payload.name.toLowerCase();
+
       const ingredientExists = state.ingredients.find(
         (ingredient) => ingredient.name === action.payload.name
       );
+
       if (!ingredientExists) {
         state.ingredients.push(action.payload);
       }
