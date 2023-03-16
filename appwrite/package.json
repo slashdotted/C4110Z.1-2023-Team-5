@@ -1,0 +1,17 @@
+{
+  "name": "appwrite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deploy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-appwrite": "^8.2.0",
+    "ora": "^6.1.2",
+    "tar": "^6.1.13"
+  }
+}
