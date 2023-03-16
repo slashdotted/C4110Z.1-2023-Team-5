@@ -25,7 +25,7 @@ export type Product = {
 };
 
 export type FridgeItem = {
-  id: string;
+  id: number;
   product: Product;
   expirationDate: string;
 };
