@@ -10,6 +10,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+import fridgeReducer from "./reducers/fridgeReducer";
 import ingredientsReducer from "./reducers/ingredientsReducer";
 import notificatonsReducer from "./reducers/notificatonsReducer";
 import productsReducer from "./reducers/productsReducer";
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   notifications: notificatonsReducer,
   products: productsReducer,
   ingredients: ingredientsReducer,
+  fridge: fridgeReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
