@@ -23,6 +23,10 @@ if (!process.env.RUNTIME) {
   throw new Error("Missing RUNTIME environment variable");
 }
 
+if (!process.env.OPENAI_API_KEY) {
+  throw new Error("Missing OPENAI_API_KEY environment variable");
+}
+
 const main = async () => {
   const ora = (await import("ora")).default;
 
@@ -48,6 +52,26 @@ const main = async () => {
       process.env.FUNCTION,
       ["any"],
       process.env.RUNTIME
+    );
+  }
+
+  const { variables } = await functions.listVariables(func.$id);
+  let variable = variables.find((v) => v.key === "OPENAI_API_KEY");
+
+  if (variable) {
+    console.log(`Updating variable ${variable.$id}`);
+    await functions.updateVariable(
+      func.$id,
+      variable.$id,
+      "OPENAI_API_KEY",
+      process.env.OPENAI_API_KEY
+    );
+  } else {
+    console.log(`Creating variable ${variable.$id}`);
+    variable = await functions.createVariable(
+      func.$id,
+      "OPENAI_API_KEY",
+      process.env.OPENAI_API_KEY
     );
   }
 
@@ -89,8 +113,11 @@ const main = async () => {
   }
 
   spinner.text = `Executing function ${process.env.FUNCTION}`;
+
+  const ingredients = ["chocolate", "vanilla", "strawberry"];
+
   const { status, statusCode, response, duration } =
-    await functions.createExecution(func.$id);
+    await functions.createExecution(func.$id, ingredients.join(","));
 
   spinner.stop();
 
@@ -102,7 +129,7 @@ const main = async () => {
   console.log(`\n### Execution ###`);
   console.log(`Execution status: ${status}`);
   console.log(`Execution status code: ${statusCode}`);
-  console.log(`Execution response: ${response}`);
+  console.log(`Execution response: `, response);
   console.log(`Execution duration: ${duration}`);
 };
 

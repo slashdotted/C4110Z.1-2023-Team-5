@@ -1,3 +1,10 @@
+const { Configuration, OpenAIApi } = require("openai");
+
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
 /*
   'req' variable has:
     'headers' - object with request headers
@@ -9,8 +16,57 @@
   If an error is thrown, a response with code 500 will be returned.
 */
 
+const getRecipe = async (ingredients) => {
+  const completion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "system",
+        content: `Create a recipe for the following ingredients: ${ingredients}
+If you use ingredients that are not listed by the user add them to the shoppingCart section of the Response.
+YOU MUST RESPOND WITH JSON ONLY.
+{
+    "title": "Recipe title",
+    "ingredients": [
+        {
+            "name": "Ingredient name",
+            "quantity": "Ingredient quantity",
+            "unit": "Ingredient unit"
+        }
+    ],
+    "steps": [
+        {
+            "title": "Instruction title",
+            "desciption": "Instruction description
+        }
+    ],
+    "shoppingCart": [
+        {
+            "name": "Ingredient name",
+            "quantity": "Ingredient quantity",
+            "unit": "Ingredient unit"
+        }
+    ]
+}`,
+      },
+    ],
+  });
+
+  return completion.data.choices[0].message.content.replaceAll("\n", "");
+};
+
 module.exports = async function (req, res) {
+  if (!process.env.OPENAI_API_KEY) {
+    return res.json({
+      ok: false,
+      error: "OPENAI_API_KEY is not set",
+    });
+  }
+
+  const recipe = await getRecipe(req.payload);
+
   res.json({
-    message: "Hello World!",
+    ok: true,
+    recipe: JSON.parse(recipe),
   });
 };
