@@ -27,6 +27,11 @@ if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY environment variable");
 }
 
+const originalConsoleLog = console.log;
+console.log = (...args) => {
+  originalConsoleLog(`[${new Date().toLocaleString()}]`, ...args);
+};
+
 const main = async () => {
   const ora = (await import("ora")).default;
 
@@ -36,45 +41,34 @@ const main = async () => {
     .setKey(process.env.KEY);
 
   const functions = new Functions(client);
-
-  let func = null;
   try {
-    func = await functions.get(process.env.FUNCTION);
-    console.log(`Found function ${process.env.FUNCTION}`);
-  } catch (e) {
-    console.log(`Error, function ${process.env.FUNCTION} not found`);
-  }
+    let func = await functions.get(process.env.FUNCTION);
+    console.log(`Deleting function ${process.env.FUNCTION} (${func.$id})`);
+    await functions.delete(func.$id);
+  } catch (e) {}
 
-  if (!func) {
-    console.log(`Creating function ${process.env.FUNCTION}`);
-    func = await functions.create(
-      process.env.FUNCTION,
-      process.env.FUNCTION,
-      ["any"],
-      process.env.RUNTIME
-    );
-  }
+  console.log(`Creating function ${process.env.FUNCTION}`);
+  const func = await functions.create(
+    process.env.FUNCTION,
+    process.env.FUNCTION,
+    ["any"],
+    process.env.RUNTIME,
+    undefined,
+    undefined,
+    900,
+    true
+  );
+  console.log(`Created function ${process.env.FUNCTION} (${func.$id})`);
 
-  const { variables } = await functions.listVariables(func.$id);
-  let variable = variables.find((v) => v.key === "OPENAI_API_KEY");
+  console.log(`Creating variable OPENAI_API_KEY`);
+  const variable = await functions.createVariable(
+    func.$id,
+    "OPENAI_API_KEY",
+    process.env.OPENAI_API_KEY
+  );
+  console.log(`Created variable ${variable.key}`);
 
-  if (variable) {
-    console.log(`Updating variable ${variable.$id}`);
-    await functions.updateVariable(
-      func.$id,
-      variable.$id,
-      "OPENAI_API_KEY",
-      process.env.OPENAI_API_KEY
-    );
-  } else {
-    console.log(`Creating variable ${variable.$id}`);
-    variable = await functions.createVariable(
-      func.$id,
-      "OPENAI_API_KEY",
-      process.env.OPENAI_API_KEY
-    );
-  }
-
+  console.log(`Creating zip of function directory`);
   // Create tar of function directory
   await tar.create(
     {
@@ -86,10 +80,6 @@ const main = async () => {
     ["."]
   );
 
-  let spinner = ora(
-    `Creating deployment for function ${process.env.FUNCTION}`
-  ).start();
-
   let deployment = await functions.createDeployment(
     func.$id,
     "index.js",
@@ -97,29 +87,34 @@ const main = async () => {
     true
   );
 
-  spinner.text = `Waiting for deployment ${deployment.$id} for function ${process.env.FUNCTION} to be ready`;
+  console.log(
+    `Created deployment ${deployment.$id} for function ${func.name} (${func.$id})`
+  );
+
+  let spinner = ora(`Please wait...`).start();
   // Wait for deployment to be ready
   while (deployment.status !== "ready") {
     deployment = await functions.getDeployment(func.$id, deployment.$id);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    spinner.text = `Waiting for deployment ${deployment.$id} for function ${process.env.FUNCTION} to be ready, current status: ${deployment.status}\n\nBuild stdout:\n${deployment.buildStdout}\n\nBuild stderr:\n${deployment.buildStderr}`;
   }
+  spinner.stop();
 
-  spinner.text = `Deployment ${deployment.$id} for function ${process.env.FUNCTION} is ready`;
-
-  const { deployments } = await functions.listDeployments(func.$id);
-  const oldDeployments = deployments.filter((d) => d.$id !== deployment.$id);
-  for (const oldDeployment of oldDeployments) {
-    spinner.text = `Deleting deployment ${oldDeployment.$id} for function ${process.env.FUNCTION}`;
-    await functions.deleteDeployment(func.$id, oldDeployment.$id);
-  }
-
-  spinner.text = `Executing function ${process.env.FUNCTION}`;
+  console.log(
+    `Deployment ${deployment.$id} for function ${func.name} (${func.$id}) is ready!`
+  );
+  console.log(deployment.buildStderr);
 
   const ingredients = ["chocolate", "vanilla", "strawberry"];
 
-  const { status, statusCode, response, duration } =
-    await functions.createExecution(func.$id, ingredients.join(","));
+  console.log(
+    `Executing function ${func.name} (${
+      func.$id
+    }), ingredients: ${ingredients.join(",")}`
+  );
 
-  spinner.stop();
+  const { status, statusCode, response, duration, stderr, stdout } =
+    await functions.createExecution(func.$id, ingredients.join(","));
 
   console.log(`### Deploy ###`);
   console.log("Endpoint: " + process.env.ENDPOINT);
@@ -131,6 +126,8 @@ const main = async () => {
   console.log(`Execution status code: ${statusCode}`);
   console.log(`Execution response: `, response);
   console.log(`Execution duration: ${duration}`);
+  console.log(`Execution stderr:\n${stderr}`);
+  console.log(`Execution stdout:\n${stdout}`);
 };
 
 main();
