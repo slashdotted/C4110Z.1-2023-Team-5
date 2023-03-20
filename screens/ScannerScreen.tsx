@@ -43,10 +43,6 @@ export default function ScannerScreen({
     setLoading(true);
     setScanned(true);
 
-    console.log(
-      `Bar code with type ${type} and data ${data} has been scanned!`
-    );
-
     setStatus("Searching for product...");
 
     openFoodFactsApi

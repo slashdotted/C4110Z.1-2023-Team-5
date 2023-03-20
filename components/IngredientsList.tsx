@@ -40,10 +40,12 @@ function IngredientsListItem({
 
 interface IngredientsListProp {
   defaultIngredients: Array<Ingredient>;
+  onChange?: (ingredients: Array<Ingredient>) => void;
 }
 
 export default function IngredientsList({
   defaultIngredients,
+  onChange,
 }: IngredientsListProp) {
   const [ingredients, setIngredients] =
     useState<Array<Ingredient>>(defaultIngredients);
@@ -92,6 +94,7 @@ export default function IngredientsList({
       });
 
       dispatch(addIngredient(newIngedient));
+      onChange && onChange([...ingredients, newIngedient]);
     }
   };
 
@@ -99,6 +102,7 @@ export default function IngredientsList({
     setIngredients((old) => {
       return old.filter((i) => i.name != ingredient.name);
     });
+    onChange && onChange(ingredients.filter((i) => i.name != ingredient.name));
   };
 
   return (

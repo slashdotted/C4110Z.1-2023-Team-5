@@ -63,7 +63,6 @@ export default function AddProductScreen({
 
   const handleAddToFridge = () => {
     if (!selectedProduct || !expiryDate) return;
-    console.log("selectedProduct", selectedProduct);
 
     dispatch(addProduct(selectedProduct));
     dispatch(
@@ -157,7 +156,20 @@ export default function AddProductScreen({
           images={novaGroupGrades.map((i) => getNovaGroupImage(i as NovaGroup))}
         />
 
-        <IngredientsList defaultIngredients={defaultIngredients} />
+        <IngredientsList
+          defaultIngredients={defaultIngredients}
+          onChange={(ingredients) => {
+            if (selectedProduct) {
+              setSelectedProduct((old) => {
+                if (!old) return null;
+                return {
+                  ...old,
+                  ingredients_text: ingredients.map((i) => i.name).join(", "),
+                };
+              });
+            }
+          }}
+        />
 
         <Center w={"full"}>
           <HStack alignItems={"center"}>
