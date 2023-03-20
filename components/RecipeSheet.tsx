@@ -65,16 +65,16 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
           <BottomSheetScrollView style={styles.itemsBox}>
             <Text style={styles.title}>{recipe.title}</Text>
 
-            {recipe.ingredients.map((i) => (
-              <HStack style={styles.item}>
+            {recipe.ingredients.map((i, index) => (
+              <HStack style={styles.item} key={index}>
                 <Text style={styles.quantity}>
                   {i.quantity} {i.unit}
                 </Text>
                 <Text style={styles.name}>{i.name}</Text>
               </HStack>
             ))}
-            {recipe.steps.map((i) => (
-              <VStack style={styles.steps}>
+            {recipe.steps.map((i, index) => (
+              <VStack style={styles.steps} key={index}>
                 <Text style={styles.stepTitle}>{i.title}</Text>
                 <Text style={styles.description}>
                   {i.description.replace(". ", ".\n")}
