@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
-import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, {
+    BottomSheetBackdrop,
+    BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 import {
     Box,
     Button,
@@ -67,7 +70,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
         <>
             <BottomSheet
                 backgroundStyle={{
-                    backgroundColor: "rgb(240,240,240)",
+                    backgroundColor: "white",
                 }}
                 backdropComponent={(props) => {
                     return (
@@ -86,7 +89,29 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
                     padding: 20,
                 }}
             >
-                {/* TODO : add call to Open AI APIs */}
+                {recipe && (
+                    <BottomSheetScrollView style={styles.itemsBox}>
+                        <Text style={styles.title}>{recipe.title}</Text>
+
+                        {recipe.ingredients.map((i) => (
+                            <HStack style={styles.item}>
+                                <Text style={styles.quantity}>
+                                    {i.quantity} {i.unit}
+                                </Text>
+                                <Text style={styles.name}>{i.name}</Text>
+                            </HStack>
+                        ))}
+                        {recipe.steps.map((i) => (
+                            <VStack style={styles.steps}>
+                                <Text style={styles.stepTitle}>{i.title}</Text>
+                                <Text style={styles.description}>
+                                  {i.description.replace(". ", ".\n")}
+                                </Text>
+                            </VStack>
+                        ))}
+                    </BottomSheetScrollView>
+                )}
+
                 <Box style={styles.disclaimerBox}>
                     <Button
                         colorScheme="danger"
@@ -130,30 +155,6 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
                         </AlertDialog.Content>
                     </AlertDialog>
                 </Box>
-
-                {recipe && (
-                    <BottomSheetScrollView style={styles.itemsBox}>
-                        <Text style={styles.title}>{recipe.title}</Text>
-                      
-                        {recipe.ingredients.map((i) => (
-                            <HStack style={styles.item}>
-                                <Text style={styles.quantity}>
-                                    {i.quantity} {i.unit}
-                                </Text>
-                                <Text style={styles.name}>{i.name}</Text>
-                            </HStack>
-                        ))}
-                        {recipe.steps.map((i) => (
-                            <Box style={styles.steps}>
-                                <Text style={styles.name}>{i.title}</Text>
-                                <Text style={styles.description}>
-                                    {" "}
-                                    {i.description}{" "}
-                                </Text>
-                            </Box>
-                        ))}
-                    </BottomSheetScrollView>
-                )}
             </BottomSheet>
         </>
     );
@@ -165,12 +166,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 30,
     },
-    ingredient: {
-        fontSize: 18,
-        marginVertical: 2,
-    },
     disclaimerBox: {
         alignItems: "center",
+        marginBottom: 30
     },
     item: {
         marginHorizontal: 30,
@@ -192,13 +190,22 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         borderRadius: 20,
-        marginBottom: 50,
+        marginBottom: 40,
     },
     description: {
         marginLeft: 15,
         marginVertical: 10,
     },
     steps: {
-      marginTop: 20
+        marginTop: 20,
+        borderWidth: 0.4,
+        borderRadius: 10,
+        borderColor: "lightgray",
+        padding: 15
+    },
+    stepTitle: {
+      fontSize: 15,
+      fontWeight: "bold",
+      alignSelf: "center"
     }
 });
