@@ -9,6 +9,7 @@ import {
   NavigatorScreenParams,
 } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Product } from "./constants/Types";
 
 declare global {
   namespace ReactNavigation {
@@ -25,7 +26,9 @@ export type RootStackParamList = {
 
 export type ScannerStackParamList = {
   Scanner: undefined;
-  AddProduct: undefined;
+  AddProduct: {
+    product?: Product;
+  };
 };
 
 export type ScannerStackScreenProps<

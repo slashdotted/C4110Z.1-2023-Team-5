@@ -4,15 +4,12 @@ import {
   Image,
   Box,
   Center,
-  VStack,
   Button,
   HStack,
-  Input,
-  Pressable,
 } from "native-base";
 import { ScannerStackScreenProps } from "../types";
-import { Platform, StyleSheet } from "react-native";
-import React, { useMemo, useState } from "react";
+import { StyleSheet } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   AutocompleteDropdown,
   TAutocompleteDropdownItem,
@@ -27,7 +24,6 @@ import {
   getNovaGroupImage,
   getNutriscoreImage,
 } from "../utils/scoreImages";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { addProduct } from "../storage/reducers/productsReducer";
 import IngredientsList from "../components/IngredientsList";
 import { addFridgeItem } from "../storage/reducers/fridgeReducer";
@@ -39,13 +35,20 @@ const novaGroupGrades = ["unknown", 1, 2, 3, 4];
 
 export default function AddProductScreen({
   navigation,
+  route,
 }: ScannerStackScreenProps<"AddProduct">) {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expiryDate, setExpiryDate] = useState<Date>(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  useEffect(() => {
+    if (route.params?.product) {
+      setSelectedProduct(route.params.product);
+      setProductName(route.params.product.product_name);
+    }
+  }, [route.params?.product]);
 
   const dataSet = products.map((product) => {
     return {
