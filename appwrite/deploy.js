@@ -44,7 +44,8 @@ const main = async () => {
   try {
     let func = await functions.get(process.env.FUNCTION);
     console.log(`Deleting function ${process.env.FUNCTION} (${func.$id})`);
-    await functions.delete(func.$id);
+    let result = await functions.delete(func.$id);
+    console.log(result);
   } catch (e) {}
 
   console.log(`Creating function ${process.env.FUNCTION}`);
@@ -105,7 +106,7 @@ const main = async () => {
   );
   console.log(deployment.buildStderr);
 
-  const ingredients = ["chocolate", "vanilla", "strawberry"];
+  const ingredients = ["Pasta", "Tomato Sauce", "Tuna"];
 
   console.log(
     `Executing function ${func.name} (${

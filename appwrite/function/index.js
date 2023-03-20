@@ -60,6 +60,7 @@ module.exports = async function (req, res) {
     return res.json({
       ok: false,
       error: "OPENAI_API_KEY is not set",
+      env: process.env,
     });
   }
 

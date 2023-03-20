@@ -1,13 +1,10 @@
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
-import BottomSheet, {
-  BottomSheetBackdrop,
-  BottomSheetFlatList,
-} from "@gorhom/bottom-sheet";
+import React, { useEffect, useState } from "react";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { Box, Button, FlatList, AlertDialog } from "native-base";
-import { SvgUri } from "react-native-svg";
 import { Text } from "./Themed";
-import { FridgeItem, Product } from "../constants/Types";
+import { FridgeItem, Recipe } from "../constants/Types";
+import FullScreenLoader from "./FullScreenLoader";
 
 interface ItemSheetProps {
   onClose: () => void;
@@ -16,7 +13,46 @@ interface ItemSheetProps {
 
 export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const cancelRef = React.useRef(null);
+
+  useEffect(() => {
+    setRecipe({
+      title: "Pasta with Tuna Tomato Sauce",
+      ingredients: [
+        { name: "Pasta", quantity: "250", unit: "grams" },
+        { name: "Tomato Sauce", quantity: "1", unit: "can" },
+        { name: "Tuna", quantity: "150", unit: "grams" },
+        { name: "Olive Oil", quantity: "2", unit: "tablespoons" },
+        { name: "Garlic", quantity: "2", unit: "cloves" },
+        { name: "Parmesan Cheese", quantity: "1/4", unit: "cup" },
+      ],
+      steps: [
+        {
+          title: "Cook pasta",
+          description:
+            "Bring a large pot of salted water to a boil. Add pasta and cook until al dente. Drain and set aside.",
+        },
+        {
+          title: "Prepare the sauce",
+          description:
+            "In a large skillet over medium heat, sauté garlic in olive oil for a minute or until fragrant. Add tuna and cook for a minute or until lightly browned. Pour the tomato sauce, stir and let it cook for 3-5 minutes or until heated through.",
+        },
+        {
+          title: "Combine pasta and sauce",
+          description:
+            "Add cooked pasta to the skillet with the sauce. Toss to combine and let it cook for a minute to let the pasta absorb the sauce. Add parmesan cheese and toss again.",
+        },
+        {
+          title: "Serve",
+          description: "Garnish with more parmesan cheese and enjoy.",
+        },
+      ],
+      shoppingCart: [],
+    });
+  }, []);
+
+  if (!recipe) return <FullScreenLoader />;
 
   return (
     <>

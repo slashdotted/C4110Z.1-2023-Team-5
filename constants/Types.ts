@@ -2,6 +2,24 @@ export type EcoScore = "a" | "b" | "c" | "d" | "e" | "unknown";
 export type NovaGroup = 1 | 2 | 3 | 4 | "unknown";
 export type NutriScore = "a" | "b" | "c" | "d" | "e" | "unknown";
 
+export type Recipe = {
+  title: string;
+  ingredients: Array<{
+    name: string;
+    quantity: string;
+    unit: string;
+  }>;
+  steps: Array<{
+    title: string;
+    description: string;
+  }>;
+  shoppingCart: Array<{
+    name: string;
+    quantity: string;
+    unit: string;
+  }>;
+};
+
 export type Ingredient = {
   name: string;
 };
