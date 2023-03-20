@@ -44,8 +44,9 @@ const main = async () => {
   try {
     let func = await functions.get(process.env.FUNCTION);
     console.log(`Deleting function ${process.env.FUNCTION} (${func.$id})`);
-    let result = await functions.delete(func.$id);
-    console.log(result);
+    await functions.delete(func.$id);
+    // Wait for function to be deleted
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   } catch (e) {}
 
   console.log(`Creating function ${process.env.FUNCTION}`);
