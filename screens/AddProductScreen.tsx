@@ -31,6 +31,7 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { addProduct } from "../storage/reducers/productsReducer";
 import IngredientsList from "../components/IngredientsList";
 import { addFridgeItem } from "../storage/reducers/fridgeReducer";
+import DatePicker from "../components/DatePicker";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -213,39 +214,7 @@ export default function AddProductScreen({
             >
               Best before:
             </Text>
-            {Platform.OS === "android" && (
-              <Pressable
-                onPress={() => {
-                  setShowDatePicker(true);
-                }}
-                backgroundColor={"gray.100"}
-                borderRadius={5}
-                p={2}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                  }}
-                >
-                  {expiryDate
-                    ? expiryDate.toLocaleDateString()
-                    : "Click to select date"}
-                </Text>
-              </Pressable>
-            )}
-
-            {(Platform.OS === "ios" || showDatePicker) && (
-              <RNDateTimePicker
-                value={expiryDate}
-                onChange={(event, date) => {
-                  if (date) {
-                    setExpiryDate(date);
-                  }
-                  setShowDatePicker(false);
-                }}
-                mode="date"
-              />
-            )}
+            <DatePicker value={expiryDate} onDateChange={setExpiryDate} />
           </HStack>
           <Button mt={2} onPress={handleAddToFridge}>
             Add to fridge
