@@ -43,7 +43,7 @@ export default function AddProductScreen({
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [expiryDate, setExpiryDate] = useState<Date | undefined>(undefined);
+  const [expiryDate, setExpiryDate] = useState<Date | undefined>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const dataSet = products.map((product) => {
@@ -137,6 +137,17 @@ export default function AddProductScreen({
           images={nutriScoreGrades.map((i) =>
             getNutriscoreImage(i as NutriScore)
           )}
+          onChange={(index) => {
+            if (selectedProduct) {
+              setSelectedProduct((old) => {
+                if (!old) return null;
+                return {
+                  ...old,
+                  nutriscore_grade: nutriScoreGrades[index] as NutriScore,
+                };
+              });
+            }
+          }}
         />
         <ScoreSlider
           initial={
@@ -146,6 +157,17 @@ export default function AddProductScreen({
           }
           viewBox="0 0 240 130"
           images={ecoScoreGrades.map((i) => getEcoScoreImage(i as EcoScore))}
+          onChange={(index) => {
+            if (selectedProduct) {
+              setSelectedProduct((old) => {
+                if (!old) return null;
+                return {
+                  ...old,
+                  ecoscore_grade: ecoScoreGrades[index] as EcoScore,
+                };
+              });
+            }
+          }}
         />
         <ScoreSlider
           initial={
@@ -154,6 +176,17 @@ export default function AddProductScreen({
           }
           viewBox="0 0 68 130"
           images={novaGroupGrades.map((i) => getNovaGroupImage(i as NovaGroup))}
+          onChange={(index) => {
+            if (selectedProduct) {
+              setSelectedProduct((old) => {
+                if (!old) return null;
+                return {
+                  ...old,
+                  nova_group: novaGroupGrades[index] as NovaGroup,
+                };
+              });
+            }
+          }}
         />
 
         <IngredientsList
@@ -203,7 +236,7 @@ export default function AddProductScreen({
 
             {(Platform.OS === "ios" || showDatePicker) && (
               <RNDateTimePicker
-                value={expiryDate || new Date()}
+                value={expiryDate}
                 onChange={(event, date) => {
                   if (date) {
                     setExpiryDate(date);
