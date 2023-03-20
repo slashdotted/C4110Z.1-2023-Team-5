@@ -43,7 +43,7 @@ export default function AddProductScreen({
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [expiryDate, setExpiryDate] = useState<Date | undefined>(new Date());
+  const [expiryDate, setExpiryDate] = useState<Date>(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const dataSet = products.map((product) => {
