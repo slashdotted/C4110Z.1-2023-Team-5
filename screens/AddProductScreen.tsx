@@ -7,9 +7,11 @@ import {
   VStack,
   Button,
   HStack,
+  Input,
+  Pressable,
 } from "native-base";
 import { ScannerStackScreenProps } from "../types";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import React, { useMemo, useState } from "react";
 import {
   AutocompleteDropdown,
@@ -42,6 +44,7 @@ export default function AddProductScreen({
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expiryDate, setExpiryDate] = useState<Date | undefined>(undefined);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const dataSet = products.map((product) => {
     return {
@@ -165,14 +168,39 @@ export default function AddProductScreen({
             >
               Best before:
             </Text>
-            <RNDateTimePicker
-              value={expiryDate || new Date()}
-              onChange={(event, date) => {
-                if (date) setExpiryDate(date);
-              }}
-              mode="date"
-              display="default"
-            />
+            {Platform.OS === "android" && (
+              <Pressable
+                onPress={() => {
+                  setShowDatePicker(true);
+                }}
+                backgroundColor={"gray.100"}
+                borderRadius={5}
+                p={2}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                  }}
+                >
+                  {expiryDate
+                    ? expiryDate.toLocaleDateString()
+                    : "Click to select date"}
+                </Text>
+              </Pressable>
+            )}
+
+            {(Platform.OS === "ios" || showDatePicker) && (
+              <RNDateTimePicker
+                value={expiryDate || new Date()}
+                onChange={(event, date) => {
+                  if (date) {
+                    setExpiryDate(date);
+                  }
+                  setShowDatePicker(false);
+                }}
+                mode="date"
+              />
+            )}
           </HStack>
           <Button mt={2} onPress={handleAddToFridge}>
             Add to fridge
