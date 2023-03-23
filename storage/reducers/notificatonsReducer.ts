@@ -7,14 +7,7 @@ export interface NotificationsState {
 }
 
 const initialState: NotificationsState = {
-  notifications: [
-    {
-      id: "1",
-      title: "Notification 1",
-      status: "success",
-      date: new Date().toISOString(),
-    },
-  ],
+  notifications: [],
 };
 
 export const notificationsSlice = createSlice({
