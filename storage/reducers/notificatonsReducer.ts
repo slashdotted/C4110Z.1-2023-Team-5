@@ -23,7 +23,9 @@ export const notificationsSlice = createSlice({
       });
     },
     deleteAllNotifications: (state) => {
-      state.notifications = [];
+      state.notifications = state.notifications.filter((notification) => {
+        return new Date(notification.date).getTime() > new Date().getTime();
+      });
     },
   },
 });

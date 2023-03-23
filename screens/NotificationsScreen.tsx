@@ -9,8 +9,11 @@ import { deleteNotification } from "../storage/reducers/notificatonsReducer";
 
 export default function NotificationScreen() {
   const dispatch = useDispatch();
-  const notifications = useSelector(
-    (state: RootState) => state.notifications.notifications
+  const notifications = useSelector((state: RootState) =>
+    state.notifications.notifications.filter(
+      (notification) =>
+        new Date(notification.date).getTime() <= new Date().getTime()
+    )
   );
 
   const renderNotification: ListRenderItem<NotificationType> = ({ item }) => {

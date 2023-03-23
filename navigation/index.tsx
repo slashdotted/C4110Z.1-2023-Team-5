@@ -49,7 +49,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const NotificationsIcon = () => {
   const navigation = useNavigation();
   const notifications = useSelector(
-    (state: RootState) => state.notifications.notifications.length
+    (state: RootState) =>
+      state.notifications.notifications.filter((n) => {
+        return new Date(n.date).getTime() <= new Date().getTime();
+      }).length
   );
 
   return (
@@ -62,6 +65,8 @@ const NotificationsIcon = () => {
 };
 
 function RootNavigator() {
+  const dispatch = useDispatch();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
