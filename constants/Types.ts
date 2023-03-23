@@ -46,6 +46,7 @@ export type FridgeItem = {
   id: number;
   product: Product;
   expirationDate: string;
+  notificationsIdentifier?: Array<string>;
 };
 
 export type Notification = {
