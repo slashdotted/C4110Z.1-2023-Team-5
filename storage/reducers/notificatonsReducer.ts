@@ -9,7 +9,7 @@ export interface NotificationsState {
 const initialState: NotificationsState = {
   notifications: [
     {
-      id: 1,
+      id: "1",
       title: "Notification 1",
       status: "success",
       date: new Date().toISOString(),
@@ -24,7 +24,7 @@ export const notificationsSlice = createSlice({
     addNotification: (state, action: PayloadAction<Notification>) => {
       state.notifications.push(action.payload);
     },
-    deleteNotification: (state, action: PayloadAction<number>) => {
+    deleteNotification: (state, action: PayloadAction<string>) => {
       state.notifications = state.notifications.filter((notification) => {
         return notification.id !== action.payload;
       });

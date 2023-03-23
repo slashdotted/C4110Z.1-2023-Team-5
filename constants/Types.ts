@@ -49,7 +49,7 @@ export type FridgeItem = {
 };
 
 export type Notification = {
-  id: number;
+  id: string;
   title: string;
   status: "error" | "warning" | "info" | "success";
   date: string;
