@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { FridgeItem } from "../../constants/Types";
+import * as Notifications from "expo-notifications";
 
 export interface FridgeState {
   fridge: FridgeItem[];
@@ -30,6 +31,16 @@ export const fridgeSlice = createSlice({
       const index = state.fridge.findIndex(
         (item) => item.id === action.payload
       );
+
+      if (index === -1) return;
+
+      // cancel notification
+      let notificationsIdentifier = state.fridge[index].notificationsIdentifier;
+      if (notificationsIdentifier) {
+        notificationsIdentifier.forEach((id) => {
+          Notifications.cancelScheduledNotificationAsync(id);
+        });
+      }
 
       // remove item
       state.fridge.splice(index, 1);
