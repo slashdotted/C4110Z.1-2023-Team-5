@@ -28,6 +28,8 @@ import { addProduct } from "../storage/reducers/productsReducer";
 import IngredientsList from "../components/IngredientsList";
 import { addFridgeItem } from "../storage/reducers/fridgeReducer";
 import DatePicker from "../components/DatePicker";
+import * as Notifications from "expo-notifications";
+import { addNotification } from "../storage/reducers/notificatonsReducer";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -65,15 +67,68 @@ export default function AddProductScreen({
       product: undefined as any,
     });
 
-  const handleAddToFridge = () => {
+  const handleAddToFridge = async () => {
     if (!selectedProduct || !expiryDate) return;
 
     dispatch(addProduct(selectedProduct));
+
+    // TODO: Move to a thunk
+    let notifications = [];
+    notifications.push({
+      identifier: await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Product expired",
+          body: `${selectedProduct.product_name} has expired`,
+        },
+        trigger: {
+          seconds: Math.max(
+            (expiryDate.getTime() - new Date().getTime()) / 1000,
+            1
+          ),
+        },
+      }),
+      title: `${selectedProduct.product_name} has expired`,
+      status: `error` as const,
+      date: expiryDate,
+    });
+
+    let aboutToExpireSeconds =
+      (expiryDate.getTime() - new Date().getTime()) / 1000 - 86400 * 7;
+
+    if (aboutToExpireSeconds > 0) {
+      notifications.push({
+        identifier: await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "Product is about to expire",
+            body: `${selectedProduct.product_name} is about to expire`,
+          },
+          trigger: {
+            seconds: aboutToExpireSeconds,
+          },
+        }),
+        title: `${selectedProduct.product_name} is about to expire`,
+        status: `warning` as const,
+        date: new Date(expiryDate.getTime() - 86400 * 1000 * 7),
+      });
+    }
+
+    notifications.forEach((n) =>
+      dispatch(
+        addNotification({
+          id: n.identifier,
+          title: n.title,
+          status: n.status,
+          date: n.date.toISOString(),
+        })
+      )
+    );
+
     dispatch(
       addFridgeItem({
         id: -1,
         product: selectedProduct,
         expirationDate: expiryDate.toISOString(),
+        notificationsIdentifier: notifications.map((n) => n.identifier),
       })
     );
 
@@ -86,6 +141,19 @@ export default function AddProductScreen({
       name: i.trim(),
     }));
   }, [selectedProduct]);
+
+  useEffect(() => {
+    const getNotificationsPermission = async () => {
+      const { status: existingStatus } =
+        await Notifications.getPermissionsAsync();
+      if (existingStatus !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        console.log(status);
+      }
+    };
+
+    getNotificationsPermission();
+  });
 
   return (
     <View style={styles.view}>
