@@ -30,6 +30,7 @@ import { addFridgeItem } from "../storage/reducers/fridgeReducer";
 import DatePicker from "../components/DatePicker";
 import * as Notifications from "expo-notifications";
 import { addNotification } from "../storage/reducers/notificatonsReducer";
+import { useTranslation } from "react-i18next";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -44,6 +45,8 @@ export default function AddProductScreen({
   const [productName, setProductName] = useState<string>("");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [expiryDate, setExpiryDate] = useState<Date>(new Date());
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (route.params?.product) {
@@ -77,8 +80,10 @@ export default function AddProductScreen({
     notifications.push({
       identifier: await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Product expired",
-          body: `${selectedProduct.product_name} has expired`,
+          title: t("Product expired") as string,
+          body: t("has expired", {
+            product: selectedProduct.product_name,
+          }) as string,
         },
         trigger: {
           seconds: Math.max(
@@ -87,7 +92,9 @@ export default function AddProductScreen({
           ),
         },
       }),
-      title: `${selectedProduct.product_name} has expired`,
+      title: t("has expired", {
+        product: selectedProduct.product_name,
+      }) as string,
       status: `error` as const,
       date: expiryDate,
     });
@@ -99,14 +106,18 @@ export default function AddProductScreen({
       notifications.push({
         identifier: await Notifications.scheduleNotificationAsync({
           content: {
-            title: "Product is about to expire",
-            body: `${selectedProduct.product_name} is about to expire`,
+            title: t("Product is about to expire") as string,
+            body: t("is about to expire", {
+              product: selectedProduct.product_name,
+            }) as string,
           },
           trigger: {
             seconds: aboutToExpireSeconds,
           },
         }),
-        title: `${selectedProduct.product_name} is about to expire`,
+        title: t("is about to expire", {
+          product: selectedProduct.product_name,
+        }) as string,
         status: `warning` as const,
         date: new Date(expiryDate.getTime() - 86400 * 1000 * 7),
       });
@@ -177,7 +188,7 @@ export default function AddProductScreen({
               justifyContent={"center"}
               backgroundColor={"gray.200"}
             >
-              <Text>Click to add product image</Text>
+              <Text>{t("Click to add product image")}</Text>
             </Box>
           )}
         </Center>
@@ -283,12 +294,12 @@ export default function AddProductScreen({
                 fontSize: 18,
               }}
             >
-              Best before:
+              {t("Best before:")}
             </Text>
             <DatePicker value={expiryDate} onDateChange={setExpiryDate} />
           </HStack>
           <Button mt={2} onPress={handleAddToFridge}>
-            Add to fridge
+            {t("Add to fridge")}
           </Button>
         </Center>
       </Container>

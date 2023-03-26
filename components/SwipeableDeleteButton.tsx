@@ -1,4 +1,5 @@
 import { Button } from "native-base";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
 interface SwipableDeleteButtonProps {
@@ -8,13 +9,15 @@ interface SwipableDeleteButtonProps {
 export default function SwipableDeleteButton({
   onDelete,
 }: SwipableDeleteButtonProps) {
+  const { t } = useTranslation();
+
   return (
     <Button
       backgroundColor={"red.500"}
       style={styles.deleteButton}
       onPress={onDelete}
     >
-      Delete
+      {t("Delete")}
     </Button>
   );
 }

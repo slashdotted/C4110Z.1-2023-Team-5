@@ -1,9 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Swipeable } from "react-native-gesture-handler";
 import { Text } from "./Themed";
 import { Pressable, StyleSheet } from "react-native";
 import { FridgeItem } from "../constants/Types";
-import SwipableDeleteButton from "./SwipeableDeleteButton";
 import expirationLevel from "../utils/expirationLevel";
 import { VStack, Image } from "native-base";
 
@@ -54,7 +52,7 @@ export default function FridgeListItem({
           source={{
             uri: item.product.image_url,
           }}
-          alt="Alternate Text"
+          alt={`${item.product.product_name}'s image`}
           size={"xl"}
           resizeMode="contain"
         />

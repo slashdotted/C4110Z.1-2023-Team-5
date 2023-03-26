@@ -12,6 +12,7 @@ import { Center, FlatList } from "native-base";
 import { Text } from "../components/Themed";
 import SwipableDeleteButton from "./SwipeableDeleteButton";
 import { Swipeable } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 interface IngredientsListItemProp {
   ingredient: Ingredient;
@@ -54,6 +55,7 @@ export default function IngredientsList({
     (state: RootState) => state.ingredients.ingredients
   );
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIngredients(defaultIngredients);
@@ -125,7 +127,7 @@ export default function IngredientsList({
         )}
         ListEmptyComponent={() => (
           <Center mt={3}>
-            <Text>No ingredients added yet</Text>
+            <Text>{t("No ingredients added yet")}</Text>
           </Center>
         )}
       />

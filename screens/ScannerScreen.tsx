@@ -10,6 +10,7 @@ import { Product } from "../constants/Types";
 import FullScreenLoader from "../components/FullScreenLoader";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../storage/reducers/productsReducer";
+import { useTranslation } from "react-i18next";
 
 const openFoodFactsApi = new OpenFoodFactsApi();
 
@@ -17,11 +18,14 @@ export default function ScannerScreen({
   navigation,
 }: ScannerStackScreenProps<"Scanner">) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const [hasPermission, setHasPermission] = useState<boolean>(false);
   const [scanned, setScanned] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [status, setStatus] = useState<string>("Looking for a barcode...");
+  const [status, setStatus] = useState<string>(
+    t("Looking for a barcode...") as string
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -48,16 +52,16 @@ export default function ScannerScreen({
     setLoading(true);
     setScanned(true);
 
-    setStatus("Searching for product...");
+    setStatus(t("Searching for product...") as string);
 
     openFoodFactsApi
       .findProductByBarcode(data)
       .then((product) => {
-        setStatus("Product found!");
+        setStatus(t("Product found!") as string);
         setProduct(product as Product);
       })
       .catch((error) => {
-        setStatus("Product not found!");
+        setStatus(t("Product not found!") as string);
         console.error(error);
       })
       .finally(() => {
@@ -66,10 +70,10 @@ export default function ScannerScreen({
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>{t("Requesting for camera permissions...")}</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>{t("No access to camera")}</Text>;
   }
 
   return (
@@ -79,9 +83,11 @@ export default function ScannerScreen({
       {!product && (
         <Button
           style={styles.addButton}
-          onPress={() => navigation.navigate("AddProduct")}
+          onPress={() =>
+            navigation.navigate("AddProduct", { product: undefined })
+          }
         >
-          Add manually
+          {t("Add manually")}
         </Button>
       )}
       <Text style={styles.status}>{status}</Text>
@@ -95,7 +101,7 @@ export default function ScannerScreen({
           onClose={() => {
             setScanned(false);
             setProduct(null);
-            setStatus("Looking for a barcode...");
+            setStatus(t("Looking for a barcode...") as string);
           }}
           onAddItem={(product) => {
             dispatch(addProduct(product));

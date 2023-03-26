@@ -11,6 +11,7 @@ import RecipeSheet from "../components/RecipeSheet";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../storage/store";
 import { deleteFridgeItem } from "../storage/reducers/fridgeReducer";
+import { useTranslation } from "react-i18next";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
   const dispatch = useDispatch();
@@ -21,6 +22,8 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
   const [selectedItem, setSelectedItem] = useState<FridgeItem | null>();
 
   const [showRecipe, setShowRecipe] = useState<boolean>(false);
+
+  const { t } = useTranslation();
 
   const renderItem = ({ item }: { item: FridgeItem }) => {
     return (
@@ -53,7 +56,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
         keyExtractor={(item) => item.id + ""}
         ListEmptyComponent={
           <Center>
-            <Text>There are no items in your Fridge</Text>
+            <Text>{t("There are no items in your Fridge")}</Text>
           </Center>
         }
         numColumns={2}
@@ -74,7 +77,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
           renderInPortal={false}
           position="absolute"
           size="md"
-          label="Generate recipe"
+          label={t("Generate recipe") as string}
           right={5}
           bottom={10}
           onPress={() => setShowRecipe(true)}

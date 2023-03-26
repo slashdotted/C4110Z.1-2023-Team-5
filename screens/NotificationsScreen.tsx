@@ -6,8 +6,11 @@ import Notification from "../components/Notification";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../storage/store";
 import { deleteNotification } from "../storage/reducers/notificatonsReducer";
+import { useTranslation } from "react-i18next";
 
 export default function NotificationScreen() {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const notifications = useSelector((state: RootState) =>
     state.notifications.notifications.filter(
@@ -36,7 +39,7 @@ export default function NotificationScreen() {
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={
           <Center>
-            <Text>There are no notifications</Text>
+            <Text>{t("There are no notifications")}</Text>
           </Center>
         }
       />

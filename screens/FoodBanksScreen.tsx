@@ -6,12 +6,15 @@ import findCountryByCoordinate from "../utils/findCountryByCoordinate";
 import { Text } from "../components/Themed";
 import USAFoodBanks from "../components/USAFoodBanks";
 import CHEFoodBanks from "../components/CHEFoodBanks";
+import { useTranslation } from "react-i18next";
 
 export default function FoodBanksScreen() {
   const [location, setLocation] = useState<Location.LocationObject | undefined>(
     undefined
   );
   const [country, setCountry] = useState<string | undefined>(undefined);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -46,7 +49,7 @@ export default function FoodBanksScreen() {
             style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             <Text>
-              Your country is currently not supported for this feature.
+              {t("Your country is currently not supported for this feature.")}
             </Text>
           </View>
         );

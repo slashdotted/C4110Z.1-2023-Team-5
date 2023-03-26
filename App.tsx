@@ -11,12 +11,27 @@ import Navigation from "./navigation";
 import store, { persistor } from "./storage/store";
 import * as Notifications from "expo-notifications";
 
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import english from "./translations/en";
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
+});
+
+i18n.use(initReactI18next).init({
+  resources: {
+    ...english,
+  },
+  lng: "en",
+  fallbackLng: "en",
+  interpolation: {
+    escapeValue: false,
+  },
 });
 
 export default function App() {

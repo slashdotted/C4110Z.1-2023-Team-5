@@ -4,14 +4,14 @@ import BottomSheet, {
   BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
 import { Center, Image, HStack, Box, Button, View } from "native-base";
-import { SvgUri } from "react-native-svg";
 import { Text } from "./Themed";
-import { FridgeItem, Product } from "../constants/Types";
+import { Product } from "../constants/Types";
 import {
   getEcoScoreImage,
   getNovaGroupImage,
   getNutriscoreImage,
 } from "../utils/scoreImages";
+import { useTranslation } from "react-i18next";
 
 interface ItemSheetProps {
   onClose: () => void;
@@ -28,6 +28,8 @@ export default function ItemSheet({
   onContinue,
   onDeleteItem,
 }: ItemSheetProps) {
+  const { t } = useTranslation();
+
   const ingredients = [
     ...new Set(product.ingredients_text.split(",").map((i) => i.trim())),
   ];
@@ -87,7 +89,7 @@ export default function ItemSheet({
           </Box>
         </HStack>
 
-        <Text style={styles.title}>Ingredients</Text>
+        <Text style={styles.title}>{t("Ingredients")}</Text>
         <Box
           my={2}
           style={{
@@ -130,7 +132,7 @@ export default function ItemSheet({
                 }
               }}
             >
-              Delete from fridge
+              {t("Delete from fridge")}
             </Button>
           </HStack>
         )}
@@ -148,7 +150,7 @@ export default function ItemSheet({
           }}
         >
           <Button variant={"outline"} colorScheme={"blue"} onPress={onContinue}>
-            Continue
+            {t("Continue")}
           </Button>
         </HStack>
       )}

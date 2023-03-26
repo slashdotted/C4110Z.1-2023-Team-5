@@ -4,20 +4,12 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import {
-  Box,
-  Button,
-  FlatList,
-  AlertDialog,
-  HStack,
-  VStack,
-  ScrollView,
-} from "native-base";
+import { Box, Button, AlertDialog, HStack, VStack } from "native-base";
 import { Text } from "./Themed";
 import { FridgeItem, Recipe } from "../constants/Types";
 import FullScreenLoader from "./FullScreenLoader";
-import { SafeAreaView } from "react-native-safe-area-context";
 import generateRecipe from "../utils/generateRecipe";
+import { useTranslation } from "react-i18next";
 
 interface ItemSheetProps {
   onClose: () => void;
@@ -28,6 +20,8 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const cancelRef = React.useRef(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     generateRecipe(products).then((recipe) => {
@@ -91,7 +85,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
             size="sm"
             onPress={() => setIsOpen(!isOpen)}
           >
-            Disclaimer
+            {t("Disclaimer")}
           </Button>
 
           <AlertDialog
@@ -101,17 +95,8 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
           >
             <AlertDialog.Content>
               <AlertDialog.CloseButton />
-              <AlertDialog.Header>Disclaimer</AlertDialog.Header>
-              <AlertDialog.Body>
-                The recipes provided on this website are for informational
-                purposes only and are not guaranteed to be 100% accurate. We do
-                not take responsibility for any errors or omissions in the
-                recipes or for any adverse effects resulting from the use of the
-                recipes provided on this website. It is the responsibility of
-                the user to verify the accuracy of the recipes and to use their
-                own judgment when preparing and consuming any food based on
-                these recipes.
-              </AlertDialog.Body>
+              <AlertDialog.Header>{t("Disclaimer")}</AlertDialog.Header>
+              <AlertDialog.Body>{t("Disclaimer text")}</AlertDialog.Body>
               <AlertDialog.Footer>
                 <Button
                   variant="unstyled"
@@ -119,7 +104,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
                   onPress={onClose}
                   ref={cancelRef}
                 >
-                  Close
+                  {t("Close")}
                 </Button>
               </AlertDialog.Footer>
             </AlertDialog.Content>

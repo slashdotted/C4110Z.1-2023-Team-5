@@ -28,6 +28,7 @@ import AddProductScreen from "../screens/AddProductScreen";
 import { RootState } from "../storage/store";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllNotifications } from "../storage/reducers/notificatonsReducer";
+import { useTranslation } from "react-i18next";
 
 export default function Navigation({
   colorScheme,
@@ -66,6 +67,7 @@ const NotificationsIcon = () => {
 
 function RootNavigator() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <Stack.Navigator>
@@ -78,7 +80,7 @@ function RootNavigator() {
         name="Notifications"
         component={NotificationScreen}
         options={{
-          title: "Notifications",
+          title: t("Notifications") as string,
           headerRight: () => (
             <Pressable onPress={() => dispatch(deleteAllNotifications())}>
               <FontAwesome name="trash" size={24} />
@@ -89,7 +91,7 @@ function RootNavigator() {
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
-        options={{ title: "Oops!" }}
+        options={{ title: t("Oops!") as string }}
       />
     </Stack.Navigator>
   );
@@ -97,13 +99,15 @@ function RootNavigator() {
 
 const ScannerStack = createNativeStackNavigator<ScannerStackParamList>();
 function ScannerNavigator() {
+  const { t } = useTranslation();
+
   return (
     <ScannerStack.Navigator>
       <ScannerStack.Screen
         name="Scanner"
         component={ScannerScreen}
         options={{
-          title: "Add grocery",
+          title: t("Add grocery") as string,
           headerRight: () => <NotificationsIcon />,
         }}
       />
@@ -111,8 +115,8 @@ function ScannerNavigator() {
         name="AddProduct"
         component={AddProductScreen}
         options={{
-          title: "Add product",
-          headerBackTitle: "Back",
+          title: t("Add product") as string,
+          headerBackTitle: t("Back") as string,
           headerRight: () => <NotificationsIcon />,
         }}
       />
@@ -124,6 +128,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
+  const { t } = useTranslation();
 
   return (
     <BottomTab.Navigator
@@ -137,7 +142,7 @@ function BottomTabNavigator() {
         name="Fridge"
         component={FridgeScreen}
         options={{
-          title: "Your fridge",
+          title: t("Your fridge") as string,
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
         }}
       />
@@ -146,7 +151,7 @@ function BottomTabNavigator() {
         component={ScannerNavigator}
         options={{
           headerShown: false,
-          title: "Add grocery",
+          title: t("Add grocery") as string,
           tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
         }}
       />
@@ -154,7 +159,7 @@ function BottomTabNavigator() {
         name="FoodBanks"
         component={FoodBanksScreen}
         options={{
-          title: "Food banks",
+          title: t("Food banks") as string,
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
         }}
       />

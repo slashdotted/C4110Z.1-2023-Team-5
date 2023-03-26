@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Platform } from "react-native";
 import { Text } from "./Themed";
 import { Pressable } from "native-base";
+import { useTranslation } from "react-i18next";
 
 interface DatePickerProps {
   onDateChange: (date: Date) => void;
@@ -17,6 +18,7 @@ export default function DatePicker({
   ...props
 }: (IOSNativeProps | AndroidNativeProps | WindowsNativeProps) &
   DatePickerProps) {
+  const { t } = useTranslation();
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   return (
@@ -37,7 +39,7 @@ export default function DatePicker({
           >
             {props.value
               ? props.value.toLocaleDateString()
-              : "Click to select date"}
+              : t("Click to select date")}
           </Text>
         </Pressable>
       )}
