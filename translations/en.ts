@@ -46,6 +46,7 @@ these recipes.`,
       "Requesting camera permissions...": "Requesting camera permissions...",
       "No access to camera": "No access to camera",
       "Add manually": "Add manually",
+      "Add an item!": "Add an item!"
     },
   },
 };
