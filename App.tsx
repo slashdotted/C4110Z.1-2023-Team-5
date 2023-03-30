@@ -14,6 +14,7 @@ import * as Notifications from "expo-notifications";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import english from "./translations/en";
+import italian from "./translations/it";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -24,8 +25,9 @@ Notifications.setNotificationHandler({
 });
 
 i18n.use(initReactI18next).init({
+  compatibilityJSON: 'v3',
   resources: {
-    ...english,
+    ...english, ...italian
   },
   lng: "en",
   fallbackLng: "en",
