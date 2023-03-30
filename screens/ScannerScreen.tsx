@@ -70,7 +70,7 @@ export default function ScannerScreen({
   };
 
   if (hasPermission === null) {
-    return <Text>{t("Requesting for camera permissions...")}</Text>;
+    return <Text>{t("Requesting camera permissions...")}</Text>;
   }
   if (hasPermission === false) {
     return <Text>{t("No access to camera")}</Text>;

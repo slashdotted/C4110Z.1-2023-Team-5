@@ -56,7 +56,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
         keyExtractor={(item) => item.id + ""}
         ListEmptyComponent={
           <Center>
-            <Text>{t("There are no items in your Fridge")}</Text>
+            <Text>{t("There are no items in your fridge")}</Text>
           </Center>
         }
         numColumns={2}
