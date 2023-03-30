@@ -63,7 +63,10 @@ export default function AddProductScreen({
     };
   });
 
-  if (productName.length > 0)
+  if (
+    productName.length > 0 &&
+    dataSet.findIndex((item) => item.title === productName) === -1
+  )
     dataSet.unshift({
       id: "new",
       title: productName,
@@ -193,6 +196,12 @@ export default function AddProductScreen({
           )}
         </Center>
         <AutocompleteDropdown
+          textInputProps={{
+            placeholder: selectedProduct
+              ? selectedProduct.product_name
+              : (t("Product name") as string),
+            defaultValue: selectedProduct?.product_name,
+          }}
           onClear={() => {
             setSelectedProduct(null);
             setProductName("");

@@ -116,6 +116,9 @@ export default function IngredientsList({
         dataSet={dataSet}
         onSelectItem={handleAddIngredient}
         clearOnFocus={true}
+        textInputProps={{
+          placeholder: t("Add ingredient") as string,
+        }}
       />
       <FlatList
         style={styles.list}
