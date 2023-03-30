@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../storage/store";
 import { deleteFridgeItem } from "../storage/reducers/fridgeReducer";
 import { useTranslation } from "react-i18next";
+import EmptyFridgeScreen from "../components/EmptyFridgeScreen";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
   const dispatch = useDispatch();
@@ -55,9 +56,7 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
         renderItem={renderItem}
         keyExtractor={(item) => item.id + ""}
         ListEmptyComponent={
-          <Center>
-            <Text>{t("There are no items in your fridge")}</Text>
-          </Center>
+          <EmptyFridgeScreen />
         }
         numColumns={2}
       />
