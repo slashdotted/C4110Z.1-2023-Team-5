@@ -55,10 +55,9 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
         data={items}
         renderItem={renderItem}
         keyExtractor={(item) => item.id + ""}
-        ListEmptyComponent={
-          <EmptyFridgeScreen />
-        }
+        ListEmptyComponent={<EmptyFridgeScreen />}
         numColumns={2}
+        contentContainerStyle={{ flexGrow: 1 }}
       />
       {selectedItem && (
         <ItemSheet
