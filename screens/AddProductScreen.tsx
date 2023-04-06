@@ -31,6 +31,8 @@ import DatePicker from "../components/DatePicker";
 import * as Notifications from "expo-notifications";
 import { addNotification } from "../storage/reducers/notificatonsReducer";
 import { useTranslation } from "react-i18next";
+import * as ImagePicker from "expo-image-picker";
+import { Pressable } from "native-base";
 
 const nutriScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
 const ecoScoreGrades = ["unknown", "a", "b", "c", "d", "e"];
@@ -43,7 +45,23 @@ export default function AddProductScreen({
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product>({
+    barcode: "",
+    product_name: "",
+    nutriscore_grade: "unknown" as NutriScore,
+    nova_group: "unknown" as NovaGroup,
+    image_url: "",
+    ingredients_text: "",
+    ecoscore_grade: "unknown" as EcoScore,
+    brands: "",
+    categories: "",
+    nutrient_levels: {
+      fat: "unknown",
+      salt: "unknown",
+      sugars: "unknown",
+      saturated_fat: "unknown",
+    },
+  });
   const [expiryDate, setExpiryDate] = useState<Date>(new Date());
 
   const { t } = useTranslation();
@@ -169,31 +187,60 @@ export default function AddProductScreen({
     getNotificationsPermission();
   });
 
+  const openImagePicker = () => {
+    ImagePicker.launchCameraAsync()
+      .then((result) => {
+        if (result.assets && result.assets.length > 0) {
+          const uri = result.assets[0].uri;
+          console.log(uri);
+          setSelectedProduct((old: Product | null) => {
+            if (!old) return old as any;
+
+            return {
+              ...old,
+              image_url: uri,
+            };
+          });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <View style={styles.view}>
       <Container size={"lg"} marginX={"auto"} style={styles.container} flex={1}>
         <Center width={"100%"}>
-          {selectedProduct ? (
-            <Image
-              height={120}
-              width={"100%"}
-              resizeMode={"contain"}
-              source={{
-                uri: selectedProduct.image_url,
-              }}
-              alt={selectedProduct.product_name + " image"}
-            />
-          ) : (
-            <Box
-              height={120}
-              width={"100%"}
-              alignItems={"center"}
-              justifyContent={"center"}
-              backgroundColor={"gray.200"}
-            >
-              <Text>{t("Click to add product image")}</Text>
-            </Box>
-          )}
+          <Pressable
+            style={{
+              flexGrow: 1,
+              width: "100%",
+            }}
+            onPress={openImagePicker}
+          >
+            {selectedProduct?.image_url ? (
+              <Image
+                height={120}
+                width={"100%"}
+                resizeMode={"contain"}
+                source={{
+                  uri: selectedProduct.image_url,
+                }}
+                alt={selectedProduct.product_name + " image"}
+              />
+            ) : (
+              <Box
+                height={120}
+                width={"100%"}
+                alignItems={"center"}
+                justifyContent={"center"}
+                backgroundColor={"gray.200"}
+              >
+                <Text>{t("Click to add product image")}</Text>
+              </Box>
+            )}
+          </Pressable>
         </Center>
         <AutocompleteDropdown
           textInputProps={{
