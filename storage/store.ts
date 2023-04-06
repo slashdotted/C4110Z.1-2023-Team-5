@@ -14,6 +14,7 @@ import fridgeReducer from "./reducers/fridgeReducer";
 import ingredientsReducer from "./reducers/ingredientsReducer";
 import notificatonsReducer from "./reducers/notificatonsReducer";
 import productsReducer from "./reducers/productsReducer";
+import settingsReducer from "./reducers/settingsReducer";
 
 const persistConfig = {
   key: "foodx",
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   products: productsReducer,
   ingredients: ingredientsReducer,
   fridge: fridgeReducer,
+  settings: settingsReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
