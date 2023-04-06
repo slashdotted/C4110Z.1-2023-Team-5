@@ -29,13 +29,18 @@ import { RootState } from "../storage/store";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteAllNotifications } from "../storage/reducers/notificatonsReducer";
 import { useTranslation } from "react-i18next";
+import OnboardingScreen from "../screens/OnboardingScreen";
 
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
-  return (
+  const showOnboarding = useSelector((state: RootState)  => {
+    return state.settings.showOnboarding
+  });
+
+  return showOnboarding ? <OnboardingScreen />: (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}

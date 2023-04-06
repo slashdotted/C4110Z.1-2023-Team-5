@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import FullScreenLoader from "./components/FullScreenLoader";
 import useCachedResources from "./hooks/useCachedResources";
@@ -15,6 +15,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import english from "./translations/en";
 import italian from "./translations/it";
+import OnboardingScreen from "./screens/OnboardingScreen";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
