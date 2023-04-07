@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { Text } from "../components/Themed";
+import { Text, useThemeColor } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { FlatList } from "react-native";
 import { Center, Fab } from "native-base";
@@ -17,6 +17,11 @@ import useInternet from "../hooks/useInternet";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
+  const backgroundColor = useThemeColor(
+    { light: "#fff", dark: "#000" },
+    "background"
+  );
+
   const internet = useInternet();
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.fridge.fridge);
@@ -53,7 +58,14 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor,
+        },
+      ]}
+    >
       <FlatList
         data={items}
         renderItem={renderItem}
@@ -109,7 +121,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "white",
   },
   fab: {
     backgroundColor: "gray",

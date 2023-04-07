@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Text } from "./Themed";
+import { Text, useThemeColor } from "./Themed";
 import { Pressable, StyleSheet } from "react-native";
 import { FridgeItem } from "../constants/Types";
 import expirationLevel from "../utils/expirationLevel";
@@ -20,6 +20,11 @@ export default function FridgeListItem({
   onDelete,
   selected,
 }: FridgeItemProps) {
+  const backgroundColor = useThemeColor(
+    { light: "#fff", dark: "#111" },
+    "background"
+  );
+
   let style = {
     borderColor: "rgba(185,28,28,0.4)",
   };
@@ -45,7 +50,12 @@ export default function FridgeListItem({
       onLongPress={() => {
         onLongPress(item);
       }}
-      style={[styles.item, style, selected && { opacity: 0.5 }]}
+      style={[
+        styles.item,
+        style,
+        selected && { opacity: 0.5 },
+        { backgroundColor },
+      ]}
     >
       <VStack space={1.5} alignItems="center">
         <Image
@@ -86,6 +96,5 @@ const styles = StyleSheet.create({
   expDate: {
     alignContent: "flex-end",
     marginBottom: 10,
-    color: "#404040",
   },
 });
