@@ -5,7 +5,7 @@ import BottomSheet, {
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Box, Button, AlertDialog, HStack, VStack } from "native-base";
-import { Text } from "./Themed";
+import { Text, useThemeColor } from "./Themed";
 import { FridgeItem, Recipe } from "../constants/Types";
 import FullScreenLoader from "./FullScreenLoader";
 import generateRecipe from "../utils/generateRecipe";
@@ -20,6 +20,11 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const cancelRef = React.useRef(null);
+
+  const backgroundColor = useThemeColor(
+    { light: "#fff", dark: "#000" },
+    "background"
+  );
 
   const { t } = useTranslation();
 
@@ -36,7 +41,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
     <>
       <BottomSheet
         backgroundStyle={{
-          backgroundColor: "white",
+          backgroundColor,
         }}
         backdropComponent={(props) => {
           return (
