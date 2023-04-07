@@ -1,8 +1,8 @@
 import { FridgeItem } from "./../constants/Types";
 
 // TODO: Move to env
-const ENDPOINT = "https://appwrite.filippofinke.ch/v1";
-const PROJECT = "641856853e13dd73abb1";
+const ENDPOINT = "https://appwrite-didattica.supsi.ch/v1";
+const PROJECT = "63f75b71ef1bbcb3604c";
 const FUNCTION = "openai-recipes";
 
 export default async function generateRecipe(items: Array<FridgeItem>) {

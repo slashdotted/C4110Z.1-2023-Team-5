@@ -13,8 +13,11 @@ import { RootState } from "../storage/store";
 import { deleteFridgeItem } from "../storage/reducers/fridgeReducer";
 import { useTranslation } from "react-i18next";
 import EmptyFridgeScreen from "../components/EmptyFridgeScreen";
+import useInternet from "../hooks/useInternet";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
+  const internet = useInternet();
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.fridge.fridge);
 
@@ -79,6 +82,14 @@ export default function FridgeScreen({}: RootTabScreenProps<"Fridge">) {
           right={5}
           bottom={10}
           onPress={() => setShowRecipe(true)}
+          icon={
+            !internet ? (
+              <Feather name="wifi-off" size={24} color="white" />
+            ) : (
+              <MaterialCommunityIcons name="robot" size={24} color="white" />
+            )
+          }
+          disabled={!internet}
         />
       )}
       {showRecipe && (
