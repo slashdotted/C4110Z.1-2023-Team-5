@@ -30,17 +30,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteAllNotifications } from "../storage/reducers/notificatonsReducer";
 import { useTranslation } from "react-i18next";
 import OnboardingScreen from "../screens/OnboardingScreen";
+import { useThemeColor } from "../components/Themed";
 
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
-  const showOnboarding = useSelector((state: RootState)  => {
-    return state.settings.showOnboarding
+  const showOnboarding = useSelector((state: RootState) => {
+    return state.settings.showOnboarding;
   });
 
-  return showOnboarding ? <OnboardingScreen />: (
+  return showOnboarding ? (
+    <OnboardingScreen />
+  ) : (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
@@ -72,6 +75,10 @@ const NotificationsIcon = () => {
 
 function RootNavigator() {
   const dispatch = useDispatch();
+  const trashIconColor = useThemeColor(
+    { light: Colors.light.tint, dark: Colors.dark.tint },
+    "text"
+  );
   const { t } = useTranslation();
 
   return (
@@ -88,7 +95,7 @@ function RootNavigator() {
           title: t("Notifications") as string,
           headerRight: () => (
             <Pressable onPress={() => dispatch(deleteAllNotifications())}>
-              <FontAwesome name="trash" size={24} />
+              <FontAwesome name="trash" size={24} color={trashIconColor} />
             </Pressable>
           ),
         }}

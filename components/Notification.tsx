@@ -21,7 +21,9 @@ export default function Notification({
       <Alert style={styles.alert} status={notification.status}>
         <Alert.Icon style={styles.icon} />
         <HStack style={styles.container}>
-          <Text>{notification.title}</Text>
+          <Text darkColor="black" lightColor="black">
+            {notification.title}
+          </Text>
           <Badge colorScheme={notification.status}>
             {new Date(notification.date).toLocaleDateString()}
           </Badge>
