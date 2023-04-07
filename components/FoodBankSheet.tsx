@@ -1,7 +1,7 @@
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import { View, Pressable, Link } from "native-base";
-import { Text } from "./Themed";
-import { Linking, StyleSheet } from "react-native";
+import { Text, useThemeColor } from "./Themed";
+import { Linking, StyleSheet, useColorScheme } from "react-native";
 import { FoodBank } from "../constants/Types";
 import openMap from "react-native-open-maps";
 import React from "react";
@@ -14,9 +14,14 @@ interface FoodBankSheetProps {
 export default React.forwardRef<BottomSheet, FoodBankSheetProps>(
   (props, ref) => {
     const { t } = useTranslation();
+    const colorScheme = useColorScheme();
 
     return (
       <BottomSheet
+        backgroundStyle={{
+          backgroundColor: colorScheme == "dark" ? "#000000" : "#ffffff",
+          opacity: 0.8,
+        }}
         enablePanDownToClose={true}
         ref={ref}
         snapPoints={["25%"]}
@@ -61,7 +66,7 @@ export default React.forwardRef<BottomSheet, FoodBankSheetProps>(
             {props.foodBank?.feature.properties.phone}
           </Text>
           <Link href={"https://" + props.foodBank?.feature.properties.url}>
-            {props.foodBank?.feature.properties.url}
+            <Text>{props.foodBank?.feature.properties.url}</Text>
           </Link>
         </View>
       </BottomSheet>
