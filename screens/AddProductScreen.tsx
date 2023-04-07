@@ -6,9 +6,10 @@ import {
   Center,
   Button,
   HStack,
+  useColorMode,
 } from "native-base";
 import { ScannerStackScreenProps } from "../types";
-import { StyleSheet } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   AutocompleteDropdown,
@@ -17,7 +18,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../storage/store";
 import { EcoScore, NovaGroup, NutriScore, Product } from "../constants/Types";
-import { Text } from "../components/Themed";
+import { Text, useThemeColor } from "../components/Themed";
 import ScoreSlider from "../components/ScoreSlider";
 import {
   getEcoScoreImage,
@@ -42,6 +43,12 @@ export default function AddProductScreen({
   navigation,
   route,
 }: ScannerStackScreenProps<"AddProduct">) {
+  const colorMode = useColorScheme();
+  const inputBackgroundColor = useThemeColor(
+    { light: "#fff", dark: "#333" },
+    "background"
+  );
+
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.products);
   const [productName, setProductName] = useState<string>("");
@@ -235,7 +242,7 @@ export default function AddProductScreen({
                 width={"100%"}
                 alignItems={"center"}
                 justifyContent={"center"}
-                backgroundColor={"gray.200"}
+                backgroundColor={colorMode == "light" ? "gray.200" : "gray.700"}
               >
                 <Text>{t("Click to add product image")}</Text>
               </Box>
@@ -243,6 +250,9 @@ export default function AddProductScreen({
           </Pressable>
         </Center>
         <AutocompleteDropdown
+          inputContainerStyle={{
+            backgroundColor: inputBackgroundColor,
+          }}
           textInputProps={{
             placeholder: selectedProduct
               ? selectedProduct.product_name
@@ -372,7 +382,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   view: {
-    backgroundColor: "white",
     flex: 1,
   },
 });

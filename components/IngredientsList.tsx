@@ -9,7 +9,7 @@ import { StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
 import { addIngredient } from "../storage/reducers/ingredientsReducer";
 import { Center, FlatList } from "native-base";
-import { Text } from "../components/Themed";
+import { Text, useThemeColor } from "../components/Themed";
 import SwipableDeleteButton from "./SwipeableDeleteButton";
 import { Swipeable } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
@@ -48,6 +48,11 @@ export default function IngredientsList({
   defaultIngredients,
   onChange,
 }: IngredientsListProp) {
+  const inputBackgroundColor = useThemeColor(
+    { light: "#fff", dark: "#333" },
+    "background"
+  );
+
   const [ingredients, setIngredients] =
     useState<Array<Ingredient>>(defaultIngredients);
   const [ingredient, setIngredient] = useState<string>("");
@@ -110,6 +115,9 @@ export default function IngredientsList({
   return (
     <>
       <AutocompleteDropdown
+        inputContainerStyle={{
+          backgroundColor: inputBackgroundColor,
+        }}
         onChangeText={(text) => setIngredient(text)}
         onClear={() => setIngredient("")}
         containerStyle={styles.input}
