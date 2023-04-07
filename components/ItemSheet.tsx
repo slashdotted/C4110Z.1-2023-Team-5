@@ -1,10 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, useColorScheme } from "react-native";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetFlatList,
 } from "@gorhom/bottom-sheet";
-import { Center, Image, HStack, Box, Button, View } from "native-base";
-import { Text } from "./Themed";
+import {
+  Center,
+  Image,
+  HStack,
+  Box,
+  Button,
+  View,
+  useColorModeValue,
+} from "native-base";
+import { Text, useThemeColor } from "./Themed";
 import { Product } from "../constants/Types";
 import {
   getEcoScoreImage,
@@ -28,6 +36,11 @@ export default function ItemSheet({
   onContinue,
   onDeleteItem,
 }: ItemSheetProps) {
+  const backgroundColor = useThemeColor(
+    { light: "#fff", dark: "#333" },
+    "background"
+  );
+
   const { t } = useTranslation();
 
   const ingredients = [
@@ -38,7 +51,8 @@ export default function ItemSheet({
     <>
       <BottomSheet
         backgroundStyle={{
-          backgroundColor: "rgb(240,240,240)",
+          backgroundColor,
+          opacity: 0.8,
         }}
         backdropComponent={(props) => {
           return (
@@ -61,7 +75,7 @@ export default function ItemSheet({
           <Text style={styles.title}>{product.product_name}</Text>
         </Center>
         <Center
-          backgroundColor={"white"}
+          backgroundColor={backgroundColor}
           borderRadius={20}
           maxHeight={180}
           padding={5}
@@ -98,7 +112,7 @@ export default function ItemSheet({
             borderRadius: 20,
             marginBottom: 100,
           }}
-          backgroundColor={"white"}
+          backgroundColor={backgroundColor}
         >
           <BottomSheetFlatList
             data={ingredients}
@@ -142,10 +156,10 @@ export default function ItemSheet({
           style={{
             position: "absolute",
             justifyContent: "space-around",
-            paddingBottom: 20,
+            paddingBottom: 6,
             paddingTop: 6,
             bottom: 0,
-            backgroundColor: "rgb(240,240,240)",
+            backgroundColor,
             width: "100%",
           }}
         >
