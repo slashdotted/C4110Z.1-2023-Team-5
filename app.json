@@ -1,44 +1,9 @@
 {
   "expo": {
-    "name": "C4110Z.1-2023-Team-5",
-    "slug": "food-expiration-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/8752a59d-e0cb-4266-9cdd-337f0f794d0a"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "web": {
-      "favicon": "./assets/images/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "8752a59d-e0cb-4266-9cdd-337f0f794d0a"
-      }
-    },
-    "owner": "filippofinke",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    }
+    "name": "Food X",
+    "slug": "food-x",
+    "icon": "./assets/icon.png",
+    "description": "An app to manage your fridge",
+    "orientation": "portrait"
   }
 }
