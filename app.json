@@ -2,8 +2,9 @@
   "expo": {
     "name": "Food X",
     "slug": "food-x",
-    "icon": "./assets/icon.png",
     "description": "An app to manage your fridge",
-    "orientation": "portrait"
+    "orientation": "portrait",
+    "sdkVersion": "47.0.0",
+    "scheme": "ch.filippofinke.foodx"
   }
 }
