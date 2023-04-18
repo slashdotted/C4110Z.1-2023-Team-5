@@ -32,6 +32,7 @@ import { useTranslation } from "react-i18next";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import { useThemeColor } from "../components/Themed";
 import SettingsScreen from "../screens/SettingsScreen";
+import i18n from "i18next";
 
 export default function Navigation({
   colorScheme,
@@ -41,6 +42,11 @@ export default function Navigation({
   const showOnboarding = useSelector((state: RootState) => {
     return state.settings.showOnboarding;
   });
+  const language = useSelector((state: RootState) => state.settings.language);
+
+  React.useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
 
   return showOnboarding ? (
     <OnboardingScreen />

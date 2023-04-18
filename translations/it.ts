@@ -59,6 +59,15 @@ const italian = {
       "Search for foodbanks with the interactive map":
         "Cerca i banchi alimentari con la mappa interattiva",
       Settings: "Impostazioni",
+      Language: "Lingua",
+      "Measurement system": "Sistema di misura",
+      "Show onboarding screen again": "Mostra nuovamente la schermata di avvio",
+      "Wipe all data": "Elimina tutti i dati",
+      "Wipe all data?": "Eliminare tutti i dati?",
+      "This action cannot be undone. All your data will be permanently deleted.":
+        "Questa azione non può essere annullata. Tutti i tuoi dati verranno eliminati definitivamente.",
+      Confirm: "Conferma",
+      Cancel: "Annulla",
     },
   },
 };

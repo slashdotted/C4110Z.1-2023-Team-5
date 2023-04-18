@@ -26,10 +26,19 @@ const reducer = combineReducers({
   products: productsReducer,
   ingredients: ingredientsReducer,
   fridge: fridgeReducer,
-  settings: settingsReducer
+  settings: settingsReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const rootReducer = (state: any, action: any) => {
+  if (action.type === "RESET") {
+    AsyncStorage.removeItem("persist:foodx");
+
+    return reducer(undefined, action);
+  }
+  return reducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,

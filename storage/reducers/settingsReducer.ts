@@ -1,11 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface SettingsState {
-    showOnboarding: boolean;
+  showOnboarding: boolean;
+  language: string;
+  measurementSystem: string;
 }
 
 const initialState: SettingsState = {
-    showOnboarding: true
+  showOnboarding: true,
+  language: "en",
+  measurementSystem: "metric",
 };
 
 export const settingsSlice = createSlice({
@@ -13,15 +17,28 @@ export const settingsSlice = createSlice({
   initialState,
   reducers: {
     showOnboarding: (state) => {
-        state.showOnboarding = true;
+      state.showOnboarding = true;
     },
 
     hideOnboarding: (state) => {
-        state.showOnboarding = false;
-    }
+      state.showOnboarding = false;
+    },
+
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    },
+
+    setMeasurementSystem: (state, action) => {
+      state.measurementSystem = action.payload;
+    },
   },
 });
 
-export const { showOnboarding, hideOnboarding } = settingsSlice.actions;
+export const {
+  showOnboarding,
+  hideOnboarding,
+  setLanguage,
+  setMeasurementSystem,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;
