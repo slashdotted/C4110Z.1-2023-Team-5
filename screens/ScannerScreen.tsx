@@ -36,10 +36,10 @@ export default function ScannerScreen({
 
     getBarCodeScannerPermissions();
 
-    handleBarCodeScanned({
+    /*handleBarCodeScanned({
       type: "EAN_13",
       data: "8076800195057",
-    });
+    });*/
   }, []);
 
   const handleBarCodeScanned = ({
