@@ -10,6 +10,8 @@ import { FridgeItem, Recipe } from "../constants/Types";
 import FullScreenLoader from "./FullScreenLoader";
 import generateRecipe from "../utils/generateRecipe";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../storage/store";
 
 interface ItemSheetProps {
   onClose: () => void;
@@ -27,9 +29,12 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   );
 
   const { t } = useTranslation();
+  const measurementSystem = useSelector(
+    (state: RootState) => state.settings.measurementSystem
+  );
 
   useEffect(() => {
-    generateRecipe(products).then((recipe) => {
+    generateRecipe(products, measurementSystem).then((recipe) => {
       if (!recipe) return onClose();
       setRecipe(recipe);
     });

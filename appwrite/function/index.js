@@ -16,7 +16,7 @@ const openai = new OpenAIApi(configuration);
   If an error is thrown, a response with code 500 will be returned.
 */
 
-const getRecipe = async (ingredients) => {
+const getRecipe = async (measurementSystem, ingredients) => {
   const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
@@ -24,6 +24,7 @@ const getRecipe = async (ingredients) => {
         role: "system",
         content: `Create a recipe for the following ingredients: ${ingredients}
 If you use ingredients that are not listed by the user add them to the shoppingCart section of the Response.
+You must use the ${measurementSystem} measurement system for the recipe.
 YOU MUST RESPOND WITH JSON ONLY.
 {
     "title": "Recipe title",
@@ -56,6 +57,8 @@ YOU MUST RESPOND WITH JSON ONLY.
 };
 
 module.exports = async function (req, res) {
+  console.log("payload", req.payload);
+
   if (!process.env.OPENAI_API_KEY) {
     return res.json({
       ok: false,
@@ -64,7 +67,12 @@ module.exports = async function (req, res) {
     });
   }
 
-  const recipe = await getRecipe(req.payload);
+  const { measurementSystem, ingredients } = JSON.parse(req.payload);
+
+  console.log("measurementSystem", measurementSystem);
+  console.log("ingredients", ingredients);
+
+  const recipe = await getRecipe(measurementSystem, ingredients);
 
   res.json({
     ok: true,

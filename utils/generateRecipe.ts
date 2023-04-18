@@ -5,15 +5,26 @@ const ENDPOINT = "https://appwrite-didattica.supsi.ch/v1";
 const PROJECT = "63f75b71ef1bbcb3604c";
 const FUNCTION = "openai-recipes";
 
-export default async function generateRecipe(items: Array<FridgeItem>) {
+export default async function generateRecipe(
+  items: Array<FridgeItem>,
+  measurementSystem: string
+) {
   console.log(
     "[openai-recipes] Generating recipe with ",
     items.length,
     " ingredients"
   );
+
+  const payload = {
+    measurementSystem,
+    ingredients: items.map((item) => item.product.product_name).join(","),
+  };
+
+  console.log("[openai-recipes] Payload", payload);
+
   const response = await fetch(`${ENDPOINT}/functions/${FUNCTION}/executions`, {
     method: "POST",
-    body: items.map((item) => item.product.product_name).join(","),
+    body: JSON.stringify(payload),
     headers: {
       "Content-Type": "text/json",
       "X-Appwrite-Project": PROJECT,

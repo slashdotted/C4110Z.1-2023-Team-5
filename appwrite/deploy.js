@@ -116,7 +116,13 @@ const main = async () => {
   );
 
   const { status, statusCode, response, duration, stderr, stdout } =
-    await functions.createExecution(func.$id, ingredients.join(","));
+    await functions.createExecution(
+      func.$id,
+      JSON.stringify({
+        measurementSystem: "imperial",
+        ingredients: ingredients.join(","),
+      })
+    );
 
   console.log(`### Deploy ###`);
   console.log("Endpoint: " + process.env.ENDPOINT);
