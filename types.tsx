@@ -42,6 +42,7 @@ export type RootTabParamList = {
   Fridge: undefined;
   FoodBanks: undefined;
   ScannerNavigator: NavigatorScreenParams<ScannerStackParamList> | undefined;
+  Settings: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

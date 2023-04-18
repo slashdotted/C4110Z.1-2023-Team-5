@@ -33,6 +33,11 @@ const linking: LinkingOptions<RootStackParamList> = {
               FoodBanksScreen: "foodbanks",
             },
           },
+          Settings: {
+            screens: {
+              SettingsScreen: "settings",
+            },
+          },
         },
       },
       NotFound: "*",

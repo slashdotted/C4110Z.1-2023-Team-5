@@ -48,10 +48,14 @@ these recipes.`,
       "Add manually": "Add manually",
       "Add an item!": "Add an item!",
       "Looks like it's time to grocery!": "Looks like it's time to grocery!",
-      "Scan food items to add to your fridge": "Scan food items to add to your fridge",
-      "See a list of groceries in your fridge ordered by expiration date": "See a list of groceries in your fridge ordered by expiration date",
-      "Foodbanks": "Foodbanks",
-      "Search for foodbanks with the interactive map": "Search for foodbanks with the interactive map",
+      "Scan food items to add to your fridge":
+        "Scan food items to add to your fridge",
+      "See a list of groceries in your fridge ordered by expiration date":
+        "See a list of groceries in your fridge ordered by expiration date",
+      Foodbanks: "Foodbanks",
+      "Search for foodbanks with the interactive map":
+        "Search for foodbanks with the interactive map",
+      Settings: "Settings",
     },
   },
 };

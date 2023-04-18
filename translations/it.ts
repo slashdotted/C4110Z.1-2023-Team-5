@@ -51,10 +51,14 @@ const italian = {
       "Add an item!": "Aggiungi un prodotto!",
       "Looks like it's time to grocery!":
         "Sembra che sia ora di fare la spesa!",
-      "Scan food items to add to your fridge": "Scansiona i tuoi prodotti per aggiungerli al frigo",
-      "See a list of groceries in your fridge ordered by expiration date": "Visualizza la lista dei tuoi prodotti ordinati per data di scadenza",
-      "Foodbanks": "Banchi alimentari",
-      "Search for foodbanks with the interactive map": "Cerca i banchi alimentari con la mappa interattiva",
+      "Scan food items to add to your fridge":
+        "Scansiona i tuoi prodotti per aggiungerli al frigo",
+      "See a list of groceries in your fridge ordered by expiration date":
+        "Visualizza la lista dei tuoi prodotti ordinati per data di scadenza",
+      Foodbanks: "Banchi alimentari",
+      "Search for foodbanks with the interactive map":
+        "Cerca i banchi alimentari con la mappa interattiva",
+      Settings: "Impostazioni",
     },
   },
 };

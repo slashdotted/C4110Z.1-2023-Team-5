@@ -31,6 +31,7 @@ import { deleteAllNotifications } from "../storage/reducers/notificatonsReducer"
 import { useTranslation } from "react-i18next";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import { useThemeColor } from "../components/Themed";
+import SettingsScreen from "../screens/SettingsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -173,6 +174,14 @@ function BottomTabNavigator() {
         options={{
           title: t("Food banks") as string,
           tabBarIcon: ({ color }) => <TabBarIcon name="map" color={color} />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          title: t("Settings") as string,
+          tabBarIcon: ({ color }) => <TabBarIcon name="cog" color={color} />,
         }}
       />
     </BottomTab.Navigator>
