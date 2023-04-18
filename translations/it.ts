@@ -68,6 +68,8 @@ const italian = {
         "Questa azione non può essere annullata. Tutti i tuoi dati verranno eliminati definitivamente.",
       Confirm: "Conferma",
       Cancel: "Annulla",
+      Metric: "Metrico",
+      Imperial: "Imperiale",
     },
   },
 };

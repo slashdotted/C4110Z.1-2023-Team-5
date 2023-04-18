@@ -64,6 +64,8 @@ these recipes.`,
       "This action cannot be undone. All your data will be permanently deleted.": `This action cannot be undone. All your data will be permanently deleted.`,
       Confirm: "Confirm",
       Cancel: "Cancel",
+      Metric: "Metric",
+      Imperial: "Imperial",
     },
   },
 };

@@ -55,8 +55,8 @@ export default function SettingsScreen({
               selectedValue={measurementSystem}
               onValueChange={changeMeasurementSystem}
             >
-              <Select.Item label="Metric" value="metric" />
-              <Select.Item label="Imperial" value="imperial" />
+              <Select.Item label={t("Metric")} value="metric" />
+              <Select.Item label={t("Imperial")} value="imperial" />
             </Select>
           </Box>
         </HStack>
