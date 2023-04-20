@@ -70,6 +70,8 @@ const italian = {
       Cancel: "Annulla",
       Metric: "Metrico",
       Imperial: "Imperiale",
+      "There was an error generating the recipe":
+        "Si è verificato un errore durante la generazione della ricetta",
     },
   },
 };

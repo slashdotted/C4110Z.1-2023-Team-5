@@ -4,7 +4,7 @@ import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
-import { Box, Button, AlertDialog, HStack, VStack } from "native-base";
+import { Box, Button, AlertDialog, HStack, VStack, Center } from "native-base";
 import { Text, useThemeColor } from "./Themed";
 import { FridgeItem, Recipe } from "../constants/Types";
 import FullScreenLoader from "./FullScreenLoader";
@@ -21,6 +21,7 @@ interface ItemSheetProps {
 export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const cancelRef = React.useRef(null);
 
   const backgroundColor = useThemeColor(
@@ -36,13 +37,13 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
   useEffect(() => {
     generateRecipe(products, measurementSystem, i18n.language).then(
       (recipe) => {
-        if (!recipe) return onClose();
+        setLoading(false);
         setRecipe(recipe);
       }
     );
   }, []);
 
-  if (!recipe) return <FullScreenLoader />;
+  if (loading) return <FullScreenLoader />;
 
   return (
     <>
@@ -67,7 +68,7 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
           padding: 20,
         }}
       >
-        {recipe && (
+        {recipe ? (
           <BottomSheetScrollView style={styles.itemsBox}>
             <Text style={styles.title}>{recipe.title}</Text>
 
@@ -88,6 +89,10 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
               </VStack>
             ))}
           </BottomSheetScrollView>
+        ) : (
+          <Center mb={5}>
+            <Text>{t("There was an error generating the recipe")}</Text>
+          </Center>
         )}
 
         <Box style={styles.disclaimerBox}>

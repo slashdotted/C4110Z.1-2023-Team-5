@@ -66,6 +66,8 @@ these recipes.`,
       Cancel: "Cancel",
       Metric: "Metric",
       Imperial: "Imperial",
+      "There was an error generating the recipe":
+        "There was an error generating the recipe",
     },
   },
 };

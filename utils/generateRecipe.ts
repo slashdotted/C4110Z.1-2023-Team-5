@@ -24,18 +24,21 @@ export default async function generateRecipe(
 
   console.log("[openai-recipes] Payload", payload);
 
-  const response = await fetch(`${ENDPOINT}/functions/${FUNCTION}/executions`, {
-    method: "POST",
-    body: JSON.stringify({
-      data: JSON.stringify(payload),
-    }),
-    headers: {
-      "content-type": "application/json",
-      "x-appwrite-project": PROJECT,
-    },
-  });
-
   try {
+    const response = await fetch(
+      `${ENDPOINT}/functions/${FUNCTION}/executions`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          data: JSON.stringify(payload),
+        }),
+        headers: {
+          "content-type": "application/json",
+          "x-appwrite-project": PROJECT,
+        },
+      }
+    );
+
     const data = await response.json();
     console.log("[openai-recipes] ", data);
     if (data.response) {
