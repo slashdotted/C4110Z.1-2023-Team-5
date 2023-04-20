@@ -124,7 +124,11 @@ const main = async () => {
         "x-appwrite-project": process.env.PROJECT,
       },
       body: JSON.stringify({
-        data: JSON.stringify({ ingredients, measurementSystem: "metric" }),
+        data: JSON.stringify({
+          ingredients,
+          measurementSystem: "metric",
+          language: "ITALIANO",
+        }),
       }),
     }
   );

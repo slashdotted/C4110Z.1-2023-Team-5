@@ -28,16 +28,18 @@ export default function RecipeSheet({ onClose, products }: ItemSheetProps) {
     "background"
   );
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const measurementSystem = useSelector(
     (state: RootState) => state.settings.measurementSystem
   );
 
   useEffect(() => {
-    generateRecipe(products, measurementSystem).then((recipe) => {
-      if (!recipe) return onClose();
-      setRecipe(recipe);
-    });
+    generateRecipe(products, measurementSystem, i18n.language).then(
+      (recipe) => {
+        if (!recipe) return onClose();
+        setRecipe(recipe);
+      }
+    );
   }, []);
 
   if (!recipe) return <FullScreenLoader />;

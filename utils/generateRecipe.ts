@@ -7,7 +7,8 @@ const FUNCTION = "openai-recipes";
 
 export default async function generateRecipe(
   items: Array<FridgeItem>,
-  measurementSystem: string
+  measurementSystem: string,
+  language: string
 ) {
   console.log(
     "[openai-recipes] Generating recipe with ",
@@ -18,6 +19,7 @@ export default async function generateRecipe(
   const payload = {
     measurementSystem,
     ingredients: items.map((item) => item.product.product_name).join(","),
+    language: language == "it" ? "ITALIANO" : "ENGLISH",
   };
 
   console.log("[openai-recipes] Payload", payload);
