@@ -24,10 +24,12 @@ export default async function generateRecipe(
 
   const response = await fetch(`${ENDPOINT}/functions/${FUNCTION}/executions`, {
     method: "POST",
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      data: JSON.stringify(payload),
+    }),
     headers: {
-      "Content-Type": "text/json",
-      "X-Appwrite-Project": PROJECT,
+      "content-type": "application/json",
+      "x-appwrite-project": PROJECT,
     },
   });
 

@@ -115,14 +115,22 @@ const main = async () => {
     }), ingredients: ${ingredients.join(",")}`
   );
 
-  const { status, statusCode, response, duration, stderr, stdout } =
-    await functions.createExecution(
-      func.$id,
-      JSON.stringify({
-        measurementSystem: "imperial",
-        ingredients: ingredients.join(","),
-      })
-    );
+  const request = await fetch(
+    `https://appwrite-didattica.supsi.ch/v1/functions/openai-recipes/executions`,
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-appwrite-project": process.env.PROJECT,
+      },
+      body: JSON.stringify({
+        data: JSON.stringify({ ingredients, measurementSystem: "metric" }),
+      }),
+    }
+  );
+
+  const { status, statusCode, duration, stderr, stdout, response } =
+    await request.json();
 
   console.log(`### Deploy ###`);
   console.log("Endpoint: " + process.env.ENDPOINT);

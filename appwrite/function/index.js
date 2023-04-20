@@ -57,8 +57,6 @@ YOU MUST RESPOND WITH JSON ONLY.
 };
 
 module.exports = async function (req, res) {
-  console.log("payload", req.payload);
-
   if (!process.env.OPENAI_API_KEY) {
     return res.json({
       ok: false,
@@ -68,10 +66,6 @@ module.exports = async function (req, res) {
   }
 
   const { measurementSystem, ingredients } = JSON.parse(req.payload);
-
-  console.log("measurementSystem", measurementSystem);
-  console.log("ingredients", ingredients);
-
   const recipe = await getRecipe(measurementSystem, ingredients);
 
   res.json({
