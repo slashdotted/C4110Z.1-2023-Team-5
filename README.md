@@ -7,7 +7,7 @@
 The Food Expiration App is a collaborative mobile application developed by SUPSI and Penn State University. This app assists users in managing their refrigerator's contents, reducing food waste by tracking expiration dates, and locating nearby food banks.
 
 <div align="center">
- <video src="docs/screenshots/app_video.mp4"/>
+ <video src="https://user-images.githubusercontent.com/37305596/236202577-ddd09161-bc9a-469f-808d-86b1dfb9317a.mp4"/>
 </div>
 
 ## Features
