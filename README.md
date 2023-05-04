@@ -36,6 +36,10 @@ This is an essential component of the Food Inventory Management System. This fea
 
 This feature empowers users to create delicious meals using the food items they have in their fridge. This feature leverages an extensive database of recipes, enabling users to generate personalized recipe suggestions based on the food items they have on hand.
 
+<p align="center">
+  <img  height="300" src="docs/screenshots/recipe.png">
+</p>
+
 ### Food Bank Locator
 
 This feature enables users to locate the nearest food banks in their area easily. This feature leverages a robust mapping system, allowing users to visualize the location of food banks in their vicinity. The Food Bank Locator feature also provides critical information such as contact details, and the address of each location.
