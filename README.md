@@ -29,6 +29,15 @@ The following technologies are used to develop the Food Expiration App:
 - `NativeBase` - a UI component library for React Native that provides a set of customizable components for building mobile applications
 - `npm` - a package manager for JavaScript used to manage the app's dependencies
 ## Getting Started
+### Dependencies required
+
+To start the project you will need to have the following dependencies installed:
+* npm
+* expo
+* Android Virtual Device SDK or XCode
+
+### How to start
+
 To start with the Food Expiration App, follow the steps below:
 
 Clone the repository to your local machine using the following command:
@@ -43,7 +52,8 @@ Start the app using the following command:
 ```bash
 npm start
 ```
-This will start the Expo development server and open the app in your default browser. You can then use the Expo app on your mobile device to preview the app.
+
+This will start the Expo development server, you can than choose on which device run the app. You can also use the Expo app on your mobile device to preview the app via the QR code.
 
 ## Authors
 This project is developed as a collaboration between SUPSI and Penn State University.
