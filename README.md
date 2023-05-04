@@ -90,6 +90,12 @@ npm run start
 
 This will start the Expo development server, you can than choose on which device run the app. You can also use the Expo app on your mobile device to preview the app via the QR code.
 
+## Project Kanban Board
+
+The board with the project tasks can be found at the following link:
+
+[Project Kanban Board](https://github.com/users/slashdotted/projects/8/views/1)
+
 ## Meeting Minutes
 
 The meeting minutes can be found in the folder `meeting_minutes`.
