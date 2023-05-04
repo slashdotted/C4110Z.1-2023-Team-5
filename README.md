@@ -44,6 +44,10 @@ This feature enables users to locate the nearest food banks in their area easily
   <img  height="300" src="docs/screenshots/food_banks.PNG">
 </p>
 
+<p align="center">
+  <img  height="300" src="docs/screenshots/food_banks_us.PNG">
+</p>
+
 ### Other screenshots
 
 #### Product scan
