@@ -90,6 +90,12 @@ npm run start
 
 This will start the Expo development server, you can than choose on which device run the app. You can also use the Expo app on your mobile device to preview the app via the QR code.
 
+## Meeting Minutes
+
+The meeting minutes can be found in the folder `meeting_minutes`.
+
+[Meeting Minutes](/meeting_minutes)
+
 ## Authors
 
 This project is developed as a collaboration between SUPSI and Penn State University.
