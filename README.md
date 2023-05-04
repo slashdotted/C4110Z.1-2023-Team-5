@@ -12,13 +12,25 @@ The Food Expiration App is a collaborative mobile application developed by SUPSI
 
 Allows users to keep track of the food items in their fridge with ease. With this feature, users can efficiently manage their food inventory, reduce waste, and save money.
 
+<p align="center">
+  <img  height="300" src="docs/screenshots/fridge.PNG">
+</p>
+
 ### Expiration Date Tracker
 
 This is a critical feature of the Food Inventory Management System. This feature helps users to stay on top of the expiration dates of their groceries, enabling them to use food before it goes bad and avoid unnecessary waste.
 
+<p align="center">
+  <img  height="300" src="docs/screenshots/add_product.PNG">
+</p>
+
 ### Notification System
 
 This is an essential component of the Food Inventory Management System. This feature sends timely notifications to the users when their food items are about to expire, ensuring that they can consume them before they go bad.
+
+<p align="center">
+  <img  height="300" src="docs/screenshots/notifications.PNG">
+</p>
 
 ### Recipe Generator
 
@@ -27,6 +39,30 @@ This feature empowers users to create delicious meals using the food items they 
 ### Food Bank Locator
 
 This feature enables users to locate the nearest food banks in their area easily. This feature leverages a robust mapping system, allowing users to visualize the location of food banks in their vicinity. The Food Bank Locator feature also provides critical information such as contact details, and the address of each location.
+
+<p align="center">
+  <img  height="300" src="docs/screenshots/food_banks.PNG">
+</p>
+
+### Other screenshots
+
+#### Product scan
+
+<p align="center">
+  <img  height="300" src="docs/screenshots/scan.PNG">
+</p>
+
+#### Settings
+
+<p align="center">
+  <img  height="300" src="docs/screenshots/settings.PNG">
+</p>
+
+#### Onboarding screens
+
+<p align="center">
+  <img  height="300" src="docs/screenshots/onboarding.PNG">
+</p>
 
 ## Technologies Used
 
